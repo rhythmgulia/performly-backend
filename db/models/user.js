@@ -15,7 +15,8 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     phone: {
-        type: Number
+        type: Number,
+        required: true
     },
     type: {
         type: Number,
