@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const SpeakerTrainerSubCategoryEnum = {
   MOTIVATIONAL_SPEAKERS: 'Motivational Speakers',
   CORPORATE_TRAINERS: 'Corporate Trainers',
-  WORKSHOP_CONDUCTORS: 'Workshop Conductors',
-  HOSTS: 'Hosts'
+  WORKSHOP_CONDUCTORS: 'Workshop Conductors'
 };
 
 const SpeakerTrainerSchema = new mongoose.Schema({
