@@ -20,8 +20,8 @@ const UserSchema = new mongoose.Schema({
     },
     type: {
         type: Number,
-        default: 0, // 0 for Client, 1 for Performer, 2 for Admin
-        enum: [0, 1, 2],
+        default: 0, // 0 for Client, 1 for Performer
+        enum: [0, 1],
         required: true
     },
     createdAt: {
