@@ -1,17 +1,12 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const userController = require("../controllers/user.controller");
+const { userValidationRules, validate } = require('../middleware/validators');
+const auth = require('../middleware/auth');
+const UserController = require('../controllers/user.controller');
 
-
-router.post("/register", userController.registerUser);
-
-
-router.get("/", userController.getAllUsers);
-
-
-router.get("/:id", userController.getUserById);
-
-
-router.delete("/:id", userController.deleteUser);
+router.post('/signup', userValidationRules(), validate, UserController.signup);
+router.post('/signin', UserController.signin);
+router.get('/profile', auth, UserController.getProfile);
+router.put('/profile', auth, userValidationRules(), validate, UserController.updateProfile);
 
 module.exports = router;
