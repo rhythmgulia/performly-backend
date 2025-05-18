@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+
 require("dotenv").config();
 
 // Import database connection
@@ -44,10 +45,12 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 8080;
 
+
 app.listen(PORT, (err) => {
     if (err)
         console.log("err", err);
     console.log(`Server listening on ${PORT}`);
+
 });
 
 module.exports = app;
