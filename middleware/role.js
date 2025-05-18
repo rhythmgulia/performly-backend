@@ -1,19 +1,21 @@
-const User = require('../models/user');
+const User = require('../db/models/user');
 
 // Performer Role Check Middleware
 const isPerformer = (req, res, next) => {
     if (req.user.type !== 1) {
-        return res.status(403).json({ error: 'Access denied. This action is for performers only.' });
+        return res.status(403).json({ message: 'Access denied. Performers only.' });
     }
     next();
 };
 
-// User Role Check Middleware
-const isUser = (req, res, next) => {
+const isClient = (req, res, next) => {
     if (req.user.type !== 0) {
-        return res.status(403).json({ error: 'Access denied. This action is for users only.' });
+        return res.status(403).json({ message: 'Access denied. Clients only.' });
     }
     next();
 };
 
-module.exports = { isPerformer, isUser };
+module.exports = {
+    isPerformer,
+    isClient
+};

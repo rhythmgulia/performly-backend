@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const UserController = require('../controllers/user.controller');
 
 router.post('/signup', userValidationRules(), validate, UserController.signup);
-router.post('/signin', UserController.signin);
+router.post('/login', UserController.login); // Changed from signin to login
 router.get('/profile', auth, UserController.getProfile);
 router.put('/profile', auth, userValidationRules(), validate, UserController.updateProfile);
 

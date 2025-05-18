@@ -1,28 +1,49 @@
 const User = require('../db/models/user');
+const Client = require('../db/models/client');
+const Performer = require('../db/models/performer');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 class UserController {
     static async signup(req, res) {
         try {
-            const { name, email, password, phone, type } = req.body;
+            const { name, phone, password, type } = req.body;
             
-            const existingUser = await User.findOne({ email });
+            const existingUser = await User.findOne({ phone });
             if (existingUser) {
-                return res.status(400).json({ message: 'User already exists' });
+                return res.status(400).json({ message: 'User with this phone number already exists' });
             }
 
             const hashedPassword = await bcrypt.hash(password, 10);
             
+            // Create user in User collection
             const user = new User({
                 name,
-                email,
-                password: hashedPassword,
                 phone,
+                password: hashedPassword,
                 type
             });
 
             await user.save();
+
+            // Based on type, create entry in respective collection
+            if (type === 1) {
+                // Create performer profile
+                const performer = new Performer({
+                    userId: user._id,
+                    category: req.body.category,
+                    subCategory: req.body.subCategory,
+                    pricing: req.body.pricing,
+                    experience: req.body.experience
+                });
+                await performer.save();
+            } else if (type === 0) {
+                // Create client profile
+                const client = new Client({
+                    userId: user._id
+                });
+                await client.save();
+            }
 
             const token = jwt.sign(
                 { userId: user._id, type: user.type },
@@ -36,7 +57,7 @@ class UserController {
                 user: {
                     id: user._id,
                     name: user.name,
-                    email: user.email,
+                    phone: user.phone,
                     type: user.type
                 }
             });
@@ -45,24 +66,24 @@ class UserController {
         }
     }
 
-    static async signin(req, res) {
+    static async login(req, res) {
         try {
-            const { email, password } = req.body;
+            const { phone, password } = req.body;
 
-            const user = await User.findOne({ email });
+            const user = await User.findOne({ phone });
             if (!user) {
-                return res.status(401).json({ message: 'Authentication failed' });
+                return res.status(401).json({ message: 'Phone number not found' });
             }
 
             const isValidPassword = await bcrypt.compare(password, user.password);
             if (!isValidPassword) {
-                return res.status(401).json({ message: 'Authentication failed' });
+                return res.status(401).json({ message: 'Incorrect password' });
             }
 
             const token = jwt.sign(
                 { userId: user._id, type: user.type },
                 process.env.JWT_SECRET,
-                { expiresIn: '24h' }
+                { expiresIn: '7d' } // Changed from '24h' to '7d'
             );
 
             res.json({
@@ -70,12 +91,12 @@ class UserController {
                 user: {
                     id: user._id,
                     name: user.name,
-                    email: user.email,
+                    phone: user.phone,
                     type: user.type
                 }
             });
         } catch (error) {
-            res.status(500).json({ message: 'Error signing in', error: error.message });
+            res.status(500).json({ message: 'Error logging in', error: error.message });
         }
     }
 
