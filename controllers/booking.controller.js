@@ -86,10 +86,62 @@ const deleteBooking = async (req, res) => {
 };
 
 
+// Add these methods to the existing booking controller
+
+const getClientBookings = async (req, res) => {
+    try {
+        const bookings = await Booking.find({ clientId: req.user.userId })
+            .populate('performerId', 'name email')
+            .sort({ createdAt: -1 });
+
+        res.json(bookings);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching bookings', error: error.message });
+    }
+};
+
+const getPerformerBookings = async (req, res) => {
+    try {
+        const bookings = await Booking.find({ performerId: req.user.userId })
+            .populate('clientId', 'name email')
+            .sort({ createdAt: -1 });
+
+        res.json(bookings);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching bookings', error: error.message });
+    }
+};
+
+const updatePaymentStatus = async (req, res) => {
+    try {
+        const { paymentStatus } = req.body;
+        
+        const booking = await Booking.findById(req.params.id);
+        if (!booking) {
+            return res.status(404).json({ message: 'Booking not found' });
+        }
+
+        // Only allow client to update payment status
+        if (booking.clientId.toString() !== req.user.userId) {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+
+        booking.paymentStatus = paymentStatus;
+        await booking.save();
+
+        res.json(booking);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating payment status', error: error.message });
+    }
+};
+
 module.exports = {
     createBooking,
     getAllBookings,
     getBookingById,
     updateBookingStatus,
-    deleteBooking
+    deleteBooking,
+    getClientBookings,
+    getPerformerBookings,
+    updatePaymentStatus
 };
