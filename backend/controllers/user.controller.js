@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 class UserController {
     static async signup(req, res) {
         try {
-            const { name, phone, password, type } = req.body;
+            const { name,phone, password, type } = req.body;
             
             const existingUser = await User.findOne({ phone });
             if (existingUser) {
@@ -27,17 +27,18 @@ class UserController {
             await user.save();
 
             // Based on type, create entry in respective collection
-            if (type === 1) {
-                // Create performer profile
-                const performer = new Performer({
-                    userId: user._id,
-                    category: req.body.category,
-                    subCategory: req.body.subCategory,
-                    pricing: req.body.pricing,
-                    experience: req.body.experience
-                });
-                await performer.save();
-            } else if (type === 0) {
+            // if (type === 1) {
+            //     // Create performer profile
+            //     const performer = new Performer({
+            //         userId: user._id,
+            //         category: req.body.category,
+            //         subCategory: req.body.subCategory,
+            //         pricing: req.body.pricing,
+            //         experience: req.body.experience
+            //     });
+            //     await performer.save();
+            // } 
+            if (type === 0) {
                 // Create client profile
                 const client = new Client({
                     userId: user._id

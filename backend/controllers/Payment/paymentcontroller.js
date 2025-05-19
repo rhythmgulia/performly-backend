@@ -1,4 +1,4 @@
-const {createRazorpayInstance} =require('../../config/razorpay.config')
+const {createRazorpayInstance} =require('../../backend/config/razorpay.config')
 require('dotenv').config()
 const crypto=require('crypto')
 
