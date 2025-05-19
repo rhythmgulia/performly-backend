@@ -237,4 +237,9 @@ PerformerSchema.pre('validate', function(next) {
   next();
 });
 
-module.exports = mongoose.model('Performer', PerformerSchema);
+module.exports = {
+  PerformerSchema: mongoose.model("performers", PerformerSchema),
+  PerformerCategoryEnum,
+  PerformerSubCategoryEnum,
+  CategoryToSubcategoryMap
+};
