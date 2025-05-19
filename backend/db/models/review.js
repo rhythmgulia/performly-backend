@@ -1,23 +1,30 @@
-const mongoose = require('mongoose');
-
 const ReviewSchema = new mongoose.Schema({
     performerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "performers",
         required: true
     },
     clientId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "clients",
+        required: true
+    },
+    bookingId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "bookings",
         required: true
     },
     rating: {
         type: Number,
-        required: true
+        required: true,
+        min: 1,
+        max: 5
     },
     comment: {
         type: String,
-        required: true
+        required: true,
+        minlength: 10,
+        maxlength: 500
     }
 }, { timestamps: true });
 
