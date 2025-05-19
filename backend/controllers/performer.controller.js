@@ -1,4 +1,4 @@
-const Performer = require('../db/models/performer');
+const {Performer} = require('../db/models/performer');
 const User = require('../db/models/user');
 
 class PerformerController {
