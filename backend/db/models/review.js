@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const ReviewSchema = new mongoose.Schema({
     performerId: {
         type: mongoose.Schema.Types.ObjectId,
