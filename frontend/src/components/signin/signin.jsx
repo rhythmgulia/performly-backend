@@ -13,7 +13,7 @@ const signin = () => {
             <input
               type="email"
               className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
-              placeholder="Enter Your Email"
+              placeholder="Enter Your Phone Number"
             />
           </div>
           <div className="email absolute top-[50%] left-[20%] ">
