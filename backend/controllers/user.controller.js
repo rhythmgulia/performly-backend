@@ -92,7 +92,7 @@ class UserController {
         { expiresIn: '7d' }
       );
 
-      res.json({
+      return res.json({
         token,
         user: {
           id: user._id,
