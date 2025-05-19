@@ -59,7 +59,7 @@ Performly is a comprehensive platform that connects performers with clients, ena
 
 ## 🛠 Tech Stack
 
-### Backend
+### ⚙️ Backend
 - **Runtime Environment**: Node.js
 - **Framework**: Express.js
 - **Database**: MongoDB with Mongoose
@@ -68,10 +68,9 @@ Performly is a comprehensive platform that connects performers with clients, ena
 - **Validation**: Express Validator
 - **Security**: bcrypt for password hashing
 
-### Frontend
+### 💻 Frontend
 - **Framework**: React.js
-- **State Management**: Redux
-- **Styling**: CSS/SCSS
+- **Styling**: CSS & TailwindCSS
 - **UI Components**: Custom components
 
 ## 🚀 Getting Started
@@ -178,4 +177,12 @@ performly-backend/
 | JWT_SECRET | Secret for JWT token generation | Yes |
 | RAZORPAY_KEY_ID | Razorpay API key | Yes |
 | RAZORPAY_KEY_SECRET | Razorpay API secret | Yes |
+
+## 👥 Contributors
+
+- [Abhishek Ratnakar](https://github.com/abhishekratnakar31)
+- [Hardik Tiwari](https://github.com/HardikTi13)
+- [Nidhi Singh](https://github.com/nidhiisinghh)
+- [Rhythm Gulia](https://github.com/rhythmgulia)
+- [Tanya Bhatnagar](https://github.com/tanyabhatnagar)
 
