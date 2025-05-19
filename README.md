@@ -16,6 +16,7 @@
 - [API Documentation](#-api-documentation)
 - [Project Structure](#-project-structure)
 - [Environment Variables](#-environment-variables)
+- [Contributors](#-contributors)
 
 ## 🌟 Overview
 
