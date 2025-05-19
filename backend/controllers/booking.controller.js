@@ -3,7 +3,8 @@ const Booking = require("../db/models/booking");
 
 const createBooking = async (req, res) => {
     try {
-        const { performerId, clientId, date, location } = req.body;
+        const { performerId, date, location } = req.body;
+        const clientId = req.user.userId;
 
         const newBooking = new Booking({
             performerId,
