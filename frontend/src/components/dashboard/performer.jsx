@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const BookingsByPerformer = () => {
-  const { id } = useParams(); // performerId from route
+  const { id } = useParams(); // performerId
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,17 +11,15 @@ const BookingsByPerformer = () => {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem('token');
-
         const res = await axios.get(`http://localhost:8083/api/bookings/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
         setBookings(res.data);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching bookings:', error);
+      } finally {
         setLoading(false);
       }
     };
@@ -29,58 +27,39 @@ const BookingsByPerformer = () => {
     fetchBookings();
   }, [id]);
 
-  const handleStatusUpdate = async (bookingId, newStatus) => {
-    try {
-      const token = localStorage.getItem('token');
-
-      await axios.put(
-        `http://localhost:8083/api/bookings/${bookingId}/status`,
-        { status: newStatus },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Update UI after status change
-      setBookings((prevBookings) =>
-        prevBookings.map((booking) =>
-          booking._id === bookingId ? { ...booking, status: newStatus } : booking
-        )
-      );
-    } catch (error) {
-      console.error('Error updating status:', error);
-    }
-  };
-
-  if (loading) return <p>Loading bookings...</p>;
+  if (loading) return <p className="text-center text-blue-500 text-lg">Loading bookings...</p>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Bookings for Performer</h1>
+    <div className="p-6 max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold mb-8 text-indigo-700 text-center">Performer Bookings</h1>
+
       {bookings.length === 0 ? (
-        <p>No bookings found for this performer.</p>
+        <p className="text-center text-gray-500">No bookings found for this performer.</p>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {bookings.map((booking) => (
-            <div key={booking._id} className="border rounded-lg p-4 shadow">
-              <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
-              <p><strong>Location:</strong> {booking.location}</p>
-              <p><strong>Status:</strong> {booking.status}</p>
-              <p><strong>Payment Status:</strong> {booking.paymentStatus}</p>
+            <div
+              key={booking._id}
+              className="bg-white border rounded-xl p-5 shadow-md hover:shadow-xl transition duration-300"
+            >
+              <h3 className="text-lg font-semibold text-indigo-600 mb-2">
+                Booking Date: {new Date(booking.date).toLocaleDateString()}
+              </h3>
+              <p className="text-gray-700 mb-1"><strong>Location:</strong> {booking.location}</p>
+              <p className="text-gray-700 mb-1"><strong>Status:</strong> {booking.status}</p>
+              <p className="text-gray-700 mb-1"><strong>Payment:</strong> {booking.paymentStatus}</p>
 
               {booking.status === 'Pending' && (
-                <div className="mt-2 space-x-2">
+                <div className="mt-4 flex gap-2">
                   <button
-                    className="px-4 py-1 bg-green-500 text-white rounded"
-                    onClick={() => handleStatusUpdate(booking._id, 'Confirmed')}
+                    className="w-full px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm font-medium"
+                    disabled
                   >
                     Confirm
                   </button>
                   <button
-                    className="px-4 py-1 bg-red-500 text-white rounded"
-                    onClick={() => handleStatusUpdate(booking._id, 'Rejected')}
+                    className="w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium"
+                    disabled
                   >
                     Reject
                   </button>
