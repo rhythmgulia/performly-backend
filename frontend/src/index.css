@@ -10,6 +10,7 @@
 } 
 .body{
   background-color: black;
+  scroll-behavior: smooth;
 }
 .text-performly{
   display: inline-block;
@@ -103,7 +104,9 @@
   }
   
 }
-
+.cards{
+  transition: 0.5s ease-in-out;
+}
 
 /* .loader-bg { 
 
