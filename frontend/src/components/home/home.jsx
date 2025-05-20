@@ -150,7 +150,7 @@ const Home = () => {
       </div>
       <div className="third-page h-screen w-full bg-white">
         <div className="text-9xl h-[20%] w-full flex justify-center items-center bg-blue-200">
-          <h1>LETS GET STARTED</h1>
+          <h1>LETS STARTED</h1>
         </div>
         <div className="login-card h-[80%] w-full bg-blue-300">
           <div className="w-23 h-23 bg-blue-100 grid grid-cols-1 gap-20" >
