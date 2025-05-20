@@ -90,7 +90,7 @@ const Signup = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:8083/api/users/signup", {
+      const res = await fetch("https://performly-backend.onrender.com/api/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
