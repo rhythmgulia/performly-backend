@@ -6,6 +6,7 @@ import Signup from "./components/signup/signup";
 import Role from "./components/card/uf"
 import Udash from "./components/dashboard/User"
 import Pdash from "./components/dashboard/performer"
+import PerformerDetails from "./components/details/PerformerDetails";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
@@ -18,8 +19,7 @@ const App = () => {
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/userdashboard/:id" element={<Udash/>}/>
         <Route path="/performerdashboard/:id" element={<Pdash/>}/>
-
-        
+        <Route path='/performer/:id' element={<PerformerDetails/>}/>
       </Routes>
     </BrowserRouter>
   );
