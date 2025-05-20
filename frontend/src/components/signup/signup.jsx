@@ -18,8 +18,6 @@
 // //   return (
 // //     <div className="signup-body">
 // //       <div className="firsthalf"></div>
-      
-    
 
 // //       <div className="second">
 // //         <div className="signup-bg">
@@ -78,8 +76,8 @@ const Signup = () => {
       return;
     }
 
-    if (isNaN(Number(phone))) {
-      alert("Please enter a valid numeric phone number");
+    if (isNaN(Number(phone)) || phone.length !== 10) {
+      alert("Please enter a valid 10-digit numeric phone number");
       return;
     }
 
@@ -195,4 +193,3 @@ const Signup = () => {
 };
 
 export default Signup;
-

@@ -1,21 +1,23 @@
-const {Performer} = require('../db/models/performer');
+const { Performer } = require('../db/models/performer');
 const User = require('../db/models/user');
 
 class PerformerController {
-    static async getAllPerformers(req, res) {
-        try {
-            const performers = await User.find({ type: 1 }).select('-password');
-            res.json(performers);
-        } catch (error) {
-            res.status(500).json({ message: 'Error fetching performers', error: error.message });
-        }
-    }
+    // performerController.js
+static async getAllPerformers(req, res) {
+  try {
+    const performers = await Performer.find().populate('userId', 'name');
+    res.status(200).json(performers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
     static async getPerformersByCategory(req, res) {
         try {
             const { category } = req.params;
             const performers = await Performer.find({ category })
-                .populate('userId', '-password');
+                .populate('userId', 'name email phone');
             res.json(performers);
         } catch (error) {
             res.status(500).json({ message: 'Error fetching performers', error: error.message });
@@ -25,7 +27,7 @@ class PerformerController {
     static async getPerformerById(req, res) {
         try {
             const performer = await Performer.findById(req.params.id)
-                .populate('userId', '-password');
+                .populate('userId', 'name email phone');
             if (!performer) {
                 return res.status(404).json({ message: 'Performer not found' });
             }
