@@ -166,26 +166,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="third-page h-[300vh] w-full">
-  <div className="text-9xl h-[9%] w-full flex justify-center items-center bg-blue-200">
-    <h1 className="appearanimation">LETS GET STARTED</h1>
-  </div>
-
-  <div className="flex sticky top-0  h-screen w-full flex justify-center items-center" >
-    <div className="h-full w-1/2 flex justify-center items-center bg-gray-100">
-      1
-    </div>
-
-    <div className="h-full w-1/2 flex justify-center items-center bg-white">
-      <div className="cardcolor h-full w-[90%] bg-blue-300 shadow-lg relative">
-        <div className=" absolute top-38 left-1/5">
-
-            <Cardsele/>
-        </div>
-      
-      </div>
-    </div>
-  </div>
+      <div className="third-page h- w-full">
+                 <Cardsele/>
+       
 </div>
 
       <footer className="h-[70%] w-full bg-black relative text-white py-10">
