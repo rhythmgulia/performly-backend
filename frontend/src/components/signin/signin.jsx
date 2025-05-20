@@ -22,29 +22,31 @@ const Signin = () => {
       return;
     }
 
-    if (isNaN(Number(phone))) {
-      alert("Please enter a valid numeric phone number");
+    if (isNaN(phone)) {
+      alert("Enter a valid 10-digit phone number");
       return;
     }
 
-    const payload = {
-      phone: Number(phone),
-      password,
-    };
-
     try {
-      const res = await axios.post("https://performly-backend.onrender.com/api/users/login", payload);
+      const res = await axios.post(
+        "https://performly-backend.onrender.com/api/users/login",
+        {
+          phone: Number(phone),
+          password,
+        }
+      );
+      console.log("Login Response:", res.data);
+
+      const { user, token } = res.data;
+      localStorage.setItem("token", token);
+
       if (res.data.user.type === 1) {
-        navigate("/performerdashboard");
+        navigate(`/performerdashboard/${res.data.user.id}`);
       } else {
-        navigate("/userdashboard");
+        navigate(`/userdashboard/${res.data.user.id}`);
       }
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.message) {
-        alert(err.response.data.message);
-      } else {
-        alert("Login failed");
-      }
+      alert(err.response?.data?.message || "Login failed");
     }
   };
 
