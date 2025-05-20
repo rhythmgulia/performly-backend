@@ -2,12 +2,30 @@ import React from "react";
 import LoaderText from "../animate/loader";
 import Picture from "../animate/lottie";
 import { useNavigate } from "react-router-dom";
+import Cardsele from "../card/uf"
 
 const Home = () => {
   const navigateto = useNavigate();
   const handlenavigate = () => {
     navigateto("/signin");
   };
+  // let cards = document.querySelectorAll(".cardelements");
+  // function rotatecards() {
+  //   let angle = 360;
+  //   cards.forEach((cardelements,index) => {
+  //     cardelements.style.transform = `rotate(${angle}deg)`;
+  //     angle = angle - 10;
+  //     cardelements.style.zIndex=cardelements.length -index
+  //   });
+  // }
+  let stackArea = document.querySelector(".third-page");
+
+  window.addEventListener("scroll", ()=>{
+    let distance = window.innerHeight/2;
+    let topval = stackArea.getBoundingClientRect().top;
+    let index = -1 * (topval/distance +1);
+    index,Math.floor
+  });
 
   const images = [
     { src: "bands.webp", name: "Bands" },
@@ -37,11 +55,13 @@ const Home = () => {
       <div>
         <header className="head fixed top-0 z-[1]  h-20 w-screen bg-transparent">
           <div className="w-full flex justify-end absolute top-3 right-4">
-
-             <button className=" h-12 w-28 bg-blue-900 text-white hover:bg-white hover:border-1 hover:width-0 hover:shadow-xl transition-all 300 ease-in-out hover:text-black" onClick={handlenavigate}>LOGIN</button>
+            <button
+              className=" h-12 w-28 bg-blue-900 text-white hover:bg-white hover:border-1 hover:width-0 hover:shadow-xl transition-all 300 ease-in-out hover:text-black"
+              onClick={handlenavigate}
+            >
+              LOGIN
+            </button>
           </div>
-         
-         
         </header>
       </div>
       <div className="home-container overflow-hidden h-full w-screen relative bg-black">
@@ -111,7 +131,7 @@ const Home = () => {
         </div>
         <div className="two h-3/7 relative ">
           <div className="aboutus h-1/2 text-9xl  w-[50%] font-bold absolute top-10 left-10 ">
-            <h1>What We Do</h1>
+            <h1 className=" appearanimation">What We Do</h1>
           </div>
           <div className="secondtext h-1/4 text-5xl flex items-center font-bold  w-[80%] absolute top-40 left-13">
             <h1>
@@ -121,58 +141,110 @@ const Home = () => {
           </div>
         </div>
         <div className="three h-3/7  relative">
-          <div className="aboutustext h-full w-[95%] flex absolute left-15   ">
-            
-            <div className=" h-full w-full "></div>
-            <div className=" h-full w-full overflow-scroll text-xl">
+          <div className="aboutustext h-[90%] w-[95%] flex absolute left-15   ">
+            <div className="  w-full "></div>
+            <div className="appearanimation2 w-full overflow-scroll text-xl bg-white border-29 border-white rounded-xl">
               <h1 className="text-5xl">Performers</h1>
-
-              Build Your Brand: Create a captivating profile
-              with images, videos, and a compelling bio that highlights your
-              talent and experience. Manage Your Gigs: Easily track your
-              bookings, update availability, and get real-time notifications.
-              Get Paid Securely: Receive hassle-free, timely payments with
-              seamless integrations. Grow Your Reputation: Collect ratings and
-              reviews to enhance your visibility in the gig community.
+              Build Your Brand: Create a captivating profile with images,
+              videos, and a compelling bio that highlights your talent and
+              experience. Manage Your Gigs: Easily track your bookings, update
+              availability, and get real-time notifications. Get Paid Securely:
+              Receive hassle-free, timely payments with seamless integrations.
+              Grow Your Reputation: Collect ratings and reviews to enhance your
+              visibility in the gig community.
             </div>
-            <div className="w-1/2"></div>
-            <div className=" h-full w-full overflow-scroll text-xl">
+            <div className="w-1/7"></div>
+            <div className="appearanimation h-full w-full overflow-scroll text-xl bg-white border-29 border-white rounded-xl ">
               <h1 className="text-5xl">Clients & Event Organizers:</h1>
-            Discover Local Talent: Browse a
-              wide range of performers—musicians, magicians, comedians, dancers,
-              and more. Filter & Find: Search by category, price, availability,
-              and location to find your perfect match. Hassle-free Bookings:
-              Send gig requests, confirm availability, and make secure
-              payments—all in one place.
+              Discover Local Talent: Browse a wide range of
+              performers—musicians, magicians, comedians, dancers, and more.
+              Filter & Find: Search by category, price, availability, and
+              location to find your perfect match. Hassle-free Bookings: Send
+              gig requests, confirm availability, and make secure payments—all
+              in one place.
             </div>
           </div>
         </div>
       </div>
-      <div className="third-page h-screen w-full bg-white">
-        <div className="text-9xl h-[20%] w-full flex justify-center items-center bg-blue-200">
-          <h1>LETS GET STARTED</h1>
-        </div>
-        <div className="login-card h-[80%] w-full bg-blue-300">
-          <div className="w-23 h-23 bg-blue-100 grid grid-cols-1 gap-20" >
+      <div className="third-page h-[300vh] w-full">
+  <div className="text-9xl h-[9%] w-full flex justify-center items-center bg-blue-200">
+    <h1 className="appearanimation">LETS GET STARTED</h1>
+  </div>
 
-            {Array.from({length:2}).map((_,index)=>(
-              <div key={index}
-              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300"
-              >
-                 <h2 className="text-xl font-semibold mb-2">Card {index + 1}</h2>
-        <p className="text-gray-600">
-          This is a sample description for card {index + 1}. You can replace it
-          with your own content.
-        </p>
+  <div className="flex sticky top-0  h-screen w-full flex justify-center items-center" >
+    <div className="h-full w-1/2 flex justify-center items-center bg-gray-100">
+      1
+    </div>
+
+    <div className="h-full w-1/2 flex justify-center items-center bg-white">
+      <div className="cardcolor h-full w-[90%] bg-blue-300 shadow-lg relative">
+        <div className=" absolute top-38 left-1/5">
+
+            <Cardsele/>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+      <footer className="h-[70%] w-full bg-black relative text-white py-10">
+        <div className="absolute top-1/3 left-50 text-3xl font-bold">
+          PERFORMLY
+        </div>
+
+        <div className="absolute top-1/3 left-1/6 ">
+          <div className="w-full flex justify-center mt-20">
+            <div className="w-3/4 grid grid-cols-1 md:grid-cols-3 gap-50">
+              <div>
+                <h2 className="text-xl font-semibold mb-4">COMPANY</h2>
+                <ul className="space-y-2">
+                  <li className="hover:underline cursor-pointer">About Us</li>
+                  <li className="hover:underline cursor-pointer">
+                    Terms & Conditions
+                  </li>
+                  <li className="hover:underline cursor-pointer">
+                    Privacy Policy
+                  </li>
+                  <li className="hover:underline cursor-pointer">Careers</li>
+                </ul>
               </div>
-            ))}
-          </div>
-         
-        </div>
-        
 
-       
-      </div> <footer className="h-1/2 w-full bg-black" ></footer>
+              <div>
+                <h2 className="text-xl font-semibold mb-4">QUICK LINKS</h2>
+                <ul className="space-y-2">
+                  <li className="hover:underline cursor-pointer">Home</li>
+                  <li className="hover:underline cursor-pointer">Features</li>
+                  <li className="hover:underline cursor-pointer">Pricing</li>
+                  <li className="hover:underline cursor-pointer">Support</li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold mb-4">FOLLOW US</h2>
+                <div className="flex gap-x-3">
+                  <a href="#" className="hover:text-gray-400">
+                    Twitter
+                  </a>
+                  <a href="#" className="hover:text-gray-400">
+                    Instagram
+                  </a>
+                  <a href="#" className="hover:text-gray-400">
+                    LinkedIn
+                  </a>
+                  <a href="#" className="hover:text-gray-400">
+                    Facebook
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center absolute left-6/14 top-3/4 text-sm text-gray-400">
+          © {new Date().getFullYear()} Performly. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 };
