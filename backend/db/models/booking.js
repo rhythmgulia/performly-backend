@@ -1,8 +1,16 @@
 const mongoose = require('mongoose');
 
 const BookingSchema = new mongoose.Schema({
-    performerId: { type: mongoose.Schema.Types.ObjectId, ref: "performers", required: true },
-    clientId: { type: mongoose.Schema.Types.ObjectId, ref: "Client", required: true },
+    performerId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "performers", 
+        required: true 
+    },
+    clientId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Client", 
+        required: true 
+    },
     date: {
         type: Date,
         required: true
