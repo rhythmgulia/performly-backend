@@ -36,12 +36,12 @@ const getAllBookings = async (req, res) => {
 
 const getBookingById = async (req, res) => {
     try {
-        const booking = await Booking.findById(req.params.id)
+        const booking = await Booking.find({performerId:req.params.id})
             .populate("performerId", "name email")
             .populate("clientId", "name email");
 
-        if (!booking) {
-            return res.status(404).json({ message: "Booking not found" });
+        if (booking.length === 0) {
+            return res.status(404).json({ message: "No bookings found for this performer" });
         }
 
         res.status(200).json(booking);

@@ -8,6 +8,7 @@ router.post('/', auth, bookingValidationRules(), validate, BookingController.cre
 router.get('/client', auth, BookingController.getClientBookings);
 router.get('/performer', auth, BookingController.getPerformerBookings);
 router.put('/:id/status', auth, BookingController.updateBookingStatus);
+router.get('/:id', auth, BookingController.getBookingById);
 router.put('/:id/payment', auth, BookingController.updatePaymentStatus);
 
 module.exports = router;
