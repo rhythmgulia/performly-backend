@@ -58,7 +58,6 @@ class UserController {
 
       res.status(201).json({
         message: 'User created successfully',
-        token,
         user: {
           id: user._id,
           name: user.name,
@@ -89,7 +88,7 @@ class UserController {
       const token = jwt.sign(
         { userId: user._id, type: user.type },
         process.env.JWT_SECRET || 'default_secret',
-        { expiresIn: '7d' }
+        { expiresIn: '24h' }
       );
 
       return res.json({
