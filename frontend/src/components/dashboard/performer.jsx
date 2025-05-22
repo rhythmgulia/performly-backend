@@ -7,10 +7,11 @@ const BookingsByPerformer = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const token = localStorage.getItem('token');
         const res = await axios.get(`http://localhost:8083/api/bookings/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -25,7 +26,30 @@ const BookingsByPerformer = () => {
     };
 
     fetchBookings();
-  }, [id]);
+  }, [id, token]);
+
+  const handleUpdateStatus = async (bookingId, status) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:8083/api/bookings/${bookingId}/status`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Update local state
+      setBookings(prev =>
+        prev.map(booking =>
+          booking._id === bookingId ? { ...booking, status: res.data.booking.status } : booking
+        )
+      );
+    } catch (error) {
+      console.error('Error updating booking status:', error);
+    }
+  };
 
   if (loading) return <p className="text-center text-blue-500 text-lg">Loading bookings...</p>;
 
@@ -53,13 +77,13 @@ const BookingsByPerformer = () => {
                 <div className="mt-4 flex gap-2">
                   <button
                     className="w-full px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm font-medium"
-                    disabled
+                    onClick={() => handleUpdateStatus(booking._id, 'Confirmed')}
                   >
                     Confirm
                   </button>
                   <button
                     className="w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium"
-                    disabled
+                    onClick={() => handleUpdateStatus(booking._id, 'Rejected')}
                   >
                     Reject
                   </button>

@@ -50,6 +50,7 @@ static async getAllPerformers(req, res) {
 
             const profile = new Performer({
                 ...req.body,
+                               
                 userId: req.user.userId
             });
 

@@ -41,7 +41,7 @@ const Signin = () => {
       localStorage.setItem("token", token);
 
       if (res.data.user.type === 1) {
-        navigate(`/performerdashboard/${res.data.user.id}`);
+        navigate(`/performerdashboard/${res.data.user.performerId}`);
       } else {
         navigate(`/userdashboard/${res.data.user.id}`);
       }

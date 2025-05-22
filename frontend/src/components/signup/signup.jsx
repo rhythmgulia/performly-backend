@@ -100,7 +100,7 @@ const Signup = () => {
 
       if (res.ok) {
         alert("Signup successful!");
-        navigate(payload.type === 0 ? "/userdashboard" : "/performerdashboard");
+        navigate('/signin');
       } else {
         alert(data.message || "Signup failed");
       }
