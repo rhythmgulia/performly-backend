@@ -51,9 +51,19 @@ const validate = (req, res, next) => {
     next();
 };
 
+const userUpdateValidationRules = () => {
+    return [
+        body('name').optional().notEmpty().withMessage('Name cannot be empty'),
+        body('phone').optional().isMobilePhone().withMessage('Valid phone number is required'),
+        body('type').optional().isIn([0, 1]).withMessage('Type must be either 0 (Client) or 1 (Performer)')
+        // Note: We exclude password updates from here, which you're already doing in controller
+    ];
+};
+
 module.exports = {
     userValidationRules,
     bookingValidationRules,
+    userUpdateValidationRules, 
     performerValidationRules,
     reviewValidationRules,
     notificationValidationRules,
