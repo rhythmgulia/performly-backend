@@ -21,6 +21,7 @@ const notificationRoutes = require('./routes/notification.router');
 const reviewRoutes = require('./routes/review.router');
 const clientRoutes = require('./routes/client.router');
 
+
 // Use routes
 app.use('/api/users', userRoutes);
 app.use('/api/performers', performerRoutes);
