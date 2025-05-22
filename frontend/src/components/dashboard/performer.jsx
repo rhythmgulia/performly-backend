@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const BookingsByPerformer = () => {
-  const { id } = useParams(); // performerId
+  const { id } = useParams(); 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,7 +12,8 @@ const BookingsByPerformer = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await axios.get(`http://localhost:8083/api/bookings/${id}`, {
+        const token = localStorage.getItem('token');
+        const res = await axios.get(`https://performly-backend.onrender.com/api/bookings/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
