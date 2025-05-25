@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Userappointments = () => {
   const [bookings, setBookings] = useState([]);
   const [error, setError] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
- useEffect(() => {
-  const fetchBookings = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get(`http://localhost:8083/api/bookings/
-        
-        
-        +++++++++++by-client/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setBookings(res.data);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Error fetching bookings');
-    }
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get(`http://localhost:8083/api/bookings/by-client/${id}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setBookings(res.data);
+      } catch (err) {
+        setError(err.response?.data?.message || 'Error fetching bookings');
+      }
+    };
+
+    fetchBookings();
+  }, [id]);
+
+  const handlePaymentRedirect = (bookingId,price) => {
+    navigate(`/payment/${bookingId}`);
   };
-
-  fetchBookings();
-}, []);
-
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -47,6 +48,15 @@ const Userappointments = () => {
               <p><strong>Location:</strong> {booking.location}</p>
               <p><strong>Status:</strong> {booking.status || "Pending"}</p>
               <p><strong>Payment:</strong> {booking.paymentStatus || "Unpaid"}</p>
+
+              {booking.status === "Confirmed" && booking.paymentStatus !== "Paid" && (
+                <button
+                  onClick={() => handlePaymentRedirect(booking._id,booking.pricing)}
+                  className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded"
+                >
+                  Make Payment
+                </button>
+              )}
             </div>
           ))}
         </div>

@@ -20,6 +20,7 @@ const bookingRoutes = require('./routes/booking.router');
 const notificationRoutes = require('./routes/notification.router');
 const reviewRoutes = require('./routes/review.router');
 const clientRoutes = require('./routes/client.router');
+const allRoutes = require('./routes/Allroutes');
 
 
 // Use routes
@@ -29,6 +30,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/clients', clientRoutes);
+app.use('/api', allRoutes);
 
 // 404 handler
 app.use((req, res) => {

@@ -10,6 +10,7 @@ import PerformerDetails from "./components/details/PerformerDetails";
 import AddPerformerForm from "./components/details/PerformerDetails";
 import Performerinfo from "./info/performerinfo";
 import Userappointments from "./components/appointments/userappointments";
+import Payment from './components/payment/payment'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
@@ -26,6 +27,8 @@ const App = () => {
         <Route path="/add-performer" element={<AddPerformerForm />} />
         <Route path="/performerinfo/:id" element={<Performerinfo />} />
         <Route path="/user/appointments/:id" element={<Userappointments/>}/>
+        <Route path="/payment/:bookingId" element={<Payment/>} />
+
       </Routes>
     </BrowserRouter>
   );

@@ -18,6 +18,7 @@ const BookingsByPerformer = () => {
           },
         });
         setBookings(res.data);
+        console.log(res.data)
       } catch (error) {
         console.error('Error fetching bookings:', error);
       } finally {

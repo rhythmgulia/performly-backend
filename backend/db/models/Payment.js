@@ -1,10 +1,9 @@
 const mongoose=require('mongoose')
 
 const paymentSchema=new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
-        required: true
+    bookingId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"bookings"
     },
     payment_id:{
         type:mongoose.Schema.Types.ObjectId
