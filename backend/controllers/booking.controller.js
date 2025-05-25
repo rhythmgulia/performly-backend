@@ -38,15 +38,14 @@ const getAllBookings = async (req, res) => {
 
 const getBookingById = async (req, res) => {
     try {
-        const booking = await Booking.find({performerId:req.params.id})
-            .populate("performerId", "name email")
-            .populate("clientId", "name email");
-
-        if (booking.length === 0) {
+        const bookings = await Booking.find({ userId: req.user.userId }) // secured
+      .populate("performerId", "name email")
+      .sort({ createdAt: -1 });
+        if (bookings.length === 0) {
             return res.status(404).json({ message: "No bookings found for this performer" });
         }
 
-        res.status(200).json(booking);
+        res.status(200).json(bookings);
     } catch (error) {
         res.status(500).json({ message: "Error retrieving booking", error: error.message });
     }
@@ -92,14 +91,18 @@ const deleteBooking = async (req, res) => {
 // Add these methods to the existing booking controller
 
 const getClientBookings = async (req, res) => {
-    try {
-        const bookings = await Booking.find({ clientId: req.user.userId })
-            .populate('performerId', 'name email')
+     try {
+        const bookings = await Booking.find({ clientId: req.params.id })
+            .populate("performerId", "name email")
             .sort({ createdAt: -1 });
 
-        res.json(bookings);
+        if (!bookings || bookings.length === 0) {
+            return res.status(404).json({ message: "No bookings found for this client" });
+        }
+
+        res.status(200).json(bookings);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching bookings', error: error.message });
+        res.status(500).json({ message: "Error fetching bookings", error: error.message });
     }
 };
 

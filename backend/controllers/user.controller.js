@@ -50,19 +50,20 @@ class UserController {
   }
 
   static async login(req, res) {
-    const { phone, password } = req.body;
-
+    
+    
     try {
-      const user = await User.findOne({ phone });
+      const { phone, password } = req.body;
+      const user = await User.findOne({ phone }).select("+password");
       if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(400).json({ message: 'Invalid phone or password' });
       }
 
-      let performerId = null;
-      if (user.type === 1) {
-        const performer = await Performer.findOne({ userId: user._id });
-        performerId = performer?._id || null;
-      }
+      // let performerId = null;
+      // if (user.type === 1) {
+      //   const performer = await Performer.findOne({ userId: user._id });
+      //   performerId = performer?._id || null;
+      // }
 
       // Fixed: Use consistent JWT payload structure
       const token = jwt.sign(
@@ -78,11 +79,12 @@ class UserController {
           name: user.name,
           phone: user.phone,
           type: user.type,
-          performerId
+          // performerId
         }
       });
     } catch (error) {
-      res.status(500).json({ message: 'Server error' });
+      console.log(error)
+      res.status(500).json({ message: `Server error ${error}` });
     }
   }
 

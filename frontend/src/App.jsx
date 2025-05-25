@@ -9,6 +9,7 @@ import Pdash from "./components/dashboard/performer"
 import PerformerDetails from "./components/details/PerformerDetails";
 import AddPerformerForm from "./components/details/PerformerDetails";
 import Performerinfo from "./info/performerinfo";
+import Userappointments from "./components/appointments/userappointments";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
         <Route path='/performer/:id' element={<PerformerDetails/>}/>
         <Route path="/add-performer" element={<AddPerformerForm />} />
         <Route path="/performerinfo/:id" element={<Performerinfo />} />
+        <Route path="/user/appointments/:id" element={<Userappointments/>}/>
       </Routes>
     </BrowserRouter>
   );
