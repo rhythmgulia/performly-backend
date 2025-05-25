@@ -111,26 +111,25 @@
 // export default User;
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 
 const PerformerCard = ({ performer, index }) => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-  });
-
-
+  const { ref, inView } = useInView({ triggerOnce: true });
 
   return (
     <Link
-  ref={ref}
-  to={performer.userId?._id ? `/performerinfo/${performer.userId._id}` : "#"}
-  key={performer.userId?._id || performer._id}
-  className={`bg-white rounded-2xl border-34 border-white p-6 shadow-xl transition-all duration-700 ease-out
-    ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-    relative z-[${50 - index}] w-full -mt-20`}
->
-
+      ref={ref}
+      to={
+        performer.userId?._id
+          ? `/performerinfo/${performer.userId._id}`
+          : "#"
+      }
+      key={performer.userId?._id || performer._id}
+      className={`bg-white rounded-2xl border border-white p-6 shadow-xl transition-all duration-700 ease-out
+        ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
+        relative z-[${50 - index}] w-full -mt-20`}
+    >
       <h3 className="text-lg font-semibold text-indigo-600 mb-2">
         {performer.userId?.name || "Unnamed Performer"}
       </h3>
@@ -157,6 +156,8 @@ const User = () => {
   const [performers, setPerformers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchPerformers = async () => {
@@ -174,12 +175,23 @@ const User = () => {
     fetchPerformers();
   }, []);
 
+  const handleYourAppointment = () => {
+    navigate(`/user/appointments/${id}`);
+  };
+
   return (
     <div className="min-h-screen w-full flex justify-center bg-blue-100">
       <div className="container w-[80%] bg-blue-200 shadow-lg rounded-lg">
-   
-        <div className="heading flex justify-center items-center h-32 bg-blue-400 rounded-t-lg">
-          <h2 className="text-2xl font-bold text-white">Discover Talented Performers</h2>
+        <div className="heading flex justify-between items-center px-6 h-32 bg-blue-400 rounded-t-lg">
+          <h2 className="text-2xl font-bold text-white">
+            Discover Talented Performers
+          </h2>
+          <button
+            onClick={handleYourAppointment}
+            className="bg-white text-blue-500 font-semibold px-4 py-2 rounded-lg shadow hover:bg-blue-100 transition"
+          >
+            Your Appointments
+          </button>
         </div>
 
         <div className="flex justify-center">
@@ -195,7 +207,7 @@ const User = () => {
                 No performers available at the moment.
               </p>
             ) : (
-              <div className="w-[70%] grid gap-8 items-center border-20 border-transparent">
+              <div className="w-[70%] grid gap-8">
                 {performers.map((performer, index) => (
                   <PerformerCard performer={performer} index={index} key={performer._id} />
                 ))}

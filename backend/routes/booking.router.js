@@ -10,5 +10,6 @@ router.get('/performer', auth, BookingController.getPerformerBookings);
 router.put('/:id/status', auth, BookingController.updateBookingStatus);
 router.get('/:id', auth, BookingController.getBookingById);
 router.put('/:id/payment', auth, BookingController.updatePaymentStatus);
+router.get('/by-client/:id', BookingController.getClientBookings);
 
 module.exports = router;
