@@ -41,8 +41,15 @@ const Signin = () => {
       localStorage.setItem("token", token);
 
       if (res.data.user.type === 1) {
-        navigate(`/performerdashboard/${res.data.user.id}`);
-      } else {
+        // if(res.data.user.performerId == undefined){
+        //   navigate(`/performer/${res.data.user.id}`)
+        // }
+        // else{
+        //   navigate(`/performerdashboard/${res.data.user.performerId}`);
+        // }   
+        navigate(`/performerdashboard/${res.data.user.id}`)   
+      } 
+      else {
         navigate(`/userdashboard/${res.data.user.id}`);
       }
     } catch (err) {

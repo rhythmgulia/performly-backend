@@ -3,13 +3,14 @@ const Booking = require("../db/models/booking");
 
 const createBooking = async (req, res) => {
     try {
-        const { performerId, date, location } = req.body;
+        const { performerId, date, time, location } = req.body;
         const clientId = req.user.userId;
 
         const newBooking = new Booking({
             performerId,
             clientId,
             date,
+            time, // ✅ Save time
             location
         });
 
@@ -19,6 +20,7 @@ const createBooking = async (req, res) => {
         res.status(500).json({ message: "Error creating booking", error: error.message });
     }
 };
+
 
 
 const getAllBookings = async (req, res) => {
