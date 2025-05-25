@@ -12,8 +12,7 @@ const BookingsByPerformer = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await axios.get(`https://performly-backend.onrender.com/api/bookings/${id}`, {
+        const res = await axios.get(`http://localhost:8083/api/bookings/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

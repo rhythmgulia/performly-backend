@@ -123,12 +123,14 @@ const PerformerCard = ({ performer, index }) => {
 
   return (
     <Link
-      ref={ref}
-      to={`/performer/${performer._id}`}
-      className={`bg-white rounded-2xl border-34  border-white p-6 shadow-xl transition-all duration-700 ease-out
-        ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-        relative z-[${50 - index}] w-full -mt-20`}
-    >
+  ref={ref}
+  to={performer.userId?._id ? `/performerinfo/${performer.userId._id}` : "#"}
+  key={performer.userId?._id || performer._id}
+  className={`bg-white rounded-2xl border-34 border-white p-6 shadow-xl transition-all duration-700 ease-out
+    ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
+    relative z-[${50 - index}] w-full -mt-20`}
+>
+
       <h3 className="text-lg font-semibold text-indigo-600 mb-2">
         {performer.userId?.name || "Unnamed Performer"}
       </h3>

@@ -1,199 +1,174 @@
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 
-// const PerformerDetails = () => {
-//   const { id } = useParams();
-//   const [performer, setPerformer] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState("");
+const PerformerProfileForm = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const fetchPerformer = async () => {
-//       try {
-//         const res = await axios.get(`https://performly-backend.onrender.com/api/performers/${id}`);
-//         setPerformer(res.data);
-//       } catch (err) {
-//         setError("Failed to load performer details.");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchPerformer();
-//   }, [id]);
+  const categoryOptions = [
+    'Artist', 'Comedian', 'Dancer', 'Entertainer', 'Event Service',
+    'Kids Entertainment', 'Magician', 'Musician', 'Speaker/Trainer',
+    'Special Performer', 'Traditional Performer'
+  ];
 
-//   if (loading) return <p className="text-blue-500">Loading performer details...</p>;
-//   if (error) return <p className="text-red-500">{error}</p>;
-//   if (!performer) return <p>Performer not found.</p>;
+  const subCategoryMap = {
+    'Artist': ['Live Painters', 'Sketch Artists', 'Calligraphers', 'Henna Artists'],
+    'Comedian': ['Stand-up', 'Improv', 'Observational', 'Dark Humor'],
+    'Dancer': ['Classical', 'Hip Hop', 'Contemporary', 'Folk', 'Street', 'Flash Mob', 'Choreographers'],
+    'Entertainer': ['Stand-up Comedians', 'Magicians', 'Clowns', 'Puppeteers', 'Storytellers'],
+    'Event Service': ['Photographers', 'Videographers', 'Event Hosts/MCs', 'Event Planners', 'Decorators', 'Lighting and Sound Technicians'],
+    'Kids Entertainment': ['Clowns', 'Balloon Artists', 'Face Painters', 'Mascots and Character Actors'],
+    'Magician': ['Card Magic', 'Illusion', 'Mentalism', 'Close-up Magic'],
+    'Musician': [
+      'Classical', 'Pop', 'Jazz', 'Rock', 'Folk', 'Guitarists', 'Pianists',
+      'Violinists', 'Drummers', 'Rock Bands', 'Jazz Bands', 'Acoustic Bands', 'DJs'
+    ],
+    'Speaker/Trainer': ['Motivational Speakers', 'Corporate Trainers', 'Workshop Conductors'],
+    'Special Performer': ['Fire Performers', 'Acrobats', 'Aerial Artists', 'Stunt Performers', 'Circus Performers'],
+    'Traditional Performer': ['Folk Singers', 'Puppet Show Artists', 'Bharatanatyam', 'Kathak', 'Street Play Artists']
+  };
 
-//   return (
-//     <div className="max-w-2xl mx-auto p-6">
-//       <h2 className="text-3xl font-bold mb-4">{performer.userId?.name}</h2>
-//       <p><strong>Category:</strong> {performer.category}</p>
-//       <p><strong>Sub-Category:</strong> {performer.subCategory}</p>
-//       <p><strong>Pricing:</strong> ₹{performer.pricing}</p>
-//       <p><strong>Bio:</strong> {performer.bio}</p>
-//       <p><strong>Email:</strong> {performer.userId?.email}</p>
-//       <p><strong>Phone:</strong> {performer.userId?.phone}</p>
-//     </div>
-//   );
-// };
-
-// export default PerformerDetails;
-
-import React, { useState } from "react";
-import axios from "axios";
-
-const AddPerformerForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    category: "",
-    subCategory: "",
-    pricing: "",
-    bio: "",
-  });
-  
-
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
-  const [showForm, setShowForm] = useState(false);
-  const [appointment, setAppointment] = useState({
-    date: '',
-    time: '',
-    location: ''
+    category: '',
+    subCategory: '',
+    experience: '',
+    pricing: '',
+    specialties: [],
+    availability: {},
+    bio: ''
   });
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
+    const { name, value } = e.target;
+    setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
+      ...(name === 'category' ? { subCategory: '' } : {})
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess("");
-    setError("");
-
+    const token = localStorage.getItem('token');
     try {
-      const response = await axios.post(
-        "https://performly-backend.onrender.com/api/performers",
-        {
-          userId: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-          },
-          category: formData.category,
-          subCategory: formData.subCategory,
-          pricing: formData.pricing,
-          bio: formData.bio,
+      const res = await axios.post(`http://localhost:8083/api/performers/profile/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
-
-      if (response.status === 201 || response.status === 200) {
-        setSuccess("Performer added successfully!");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          category: "",
-          subCategory: "",
-          pricing: "",
-          bio: "",
-        });
-      }
-    } catch (err) {
-      setError("Failed to add performer. Please try again.");
+      });
+      alert('Profile created!');
+      navigate(`/performerdashboard/${id}`);
+    } catch (error) {
+      console.error('Profile creation failed:', error.response?.data || error.message);
     }
   };
 
   return (
-    <>
-      <div className=" h-screen flex gap-20 justify-center items-center">
-        <div className="h-[20%] w-[20%] flex justify-center">
-          <h2 className="text-2xl font-bold mb-4">PERFORMER DETAILS</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8 space-y-6"
+      >
+        <h2 className="text-2xl font-bold text-center text-gray-800">Create Performer Profile</h2>
+
+        {/* Category */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+          >
+            <option value="">Select Category</option>
+            {categoryOptions.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
         </div>
 
-        <div className="h-[60%] w-[25%] bg-white border-34 rounded-3xl border-white shadow-2xl flex items-center ">
-          {success && <p className="text-green-600 mb-3">{success}</p>}
-          {error && <p className="text-red-600 mb-3">{error}</p>}
-
-          <form onSubmit={handleSubmit} className=" grid w-full gap-4">
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              placeholder="Performer Name"
-              onChange={handleChange}
-              className="w-full border-1 h-10 rounded-xl "
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              placeholder="Email"
-              onChange={handleChange}
-              className="w-full border-1 h-10 rounded-xl"
-              required
-            />
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              placeholder="Phone"
-              onChange={handleChange}
-              className="w-full border-1 h-10 rounded-xl"
-            />
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
-              placeholder="Category"
-              onChange={handleChange}
-              className="w-full border-1 h-10 rounded-xl"
-              required
-            />
-            <input
-              type="text"
-              name="subCategory"
-              value={formData.subCategory}
-              placeholder="Sub-Category"
-              onChange={handleChange}
-              className="w-full border-1 h-10 rounded-xl"
-            />
-            <input
-              type="number"
-              name="pricing"
-              value={formData.pricing}
-              placeholder="Pricing (INR)"
-              onChange={handleChange}
-              className="w-full border-1 h-10 rounded-xl"
-            />
-            <textarea
-              name="bio"
-              value={formData.bio}
-              placeholder="Bio"
-              onChange={handleChange}
-              className="w-full border-1 h-10 rounded-xl"
-              rows="4"
-            />
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="border-2 w-[60%] h-10 text-black rounded-2xl hover:bg-indigo-700"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+        {/* SubCategory */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Subcategory</label>
+          <select
+            name="subCategory"
+            value={formData.subCategory}
+            onChange={handleChange}
+            required
+            disabled={!formData.category}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+          >
+            <option value="">Select SubCategory</option>
+            {formData.category && subCategoryMap[formData.category]?.map(sub => (
+              <option key={sub} value={sub}>{sub}</option>
+            ))}
+          </select>
         </div>
-      </div>
-    </>
+
+        {/* Experience */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Experience (Years)</label>
+          <input
+            name="experience"
+            type="number"
+            placeholder="Enter years of experience"
+            value={formData.experience}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        {/* Pricing */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Pricing (₹)</label>
+          <input
+            name="pricing"
+            type="number"
+            placeholder="Enter pricing"
+            value={formData.pricing}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        {/* Specialties */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Specialties</label>
+          <input
+            name="specialties"
+            placeholder="Enter comma-separated specialties"
+            onChange={(e) =>
+              setFormData(prev => ({ ...prev, specialties: e.target.value.split(',') }))
+            }
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+        {/* Bio */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Bio</label>
+          <textarea
+            name="bio"
+            placeholder="Tell us about yourself"
+            onChange={handleChange}
+            rows="4"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md resize-none"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition duration-200"
+        >
+          Create Profile
+        </button>
+      </form>
+    </div>
   );
 };
 
-export default AddPerformerForm;
+export default PerformerProfileForm;

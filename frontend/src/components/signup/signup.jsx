@@ -1,53 +1,3 @@
-// // import React from "react";
-// // import { useNavigate } from "react-router-dom";
-// // import home from "../animate/Background";
-
-// // const signup = () => {
-// //   const navigate = useNavigate();
-// //   const handleClick = () => {
-// //     navigate("/signin");
-// //   };
-
-// //   const isvalid = () => {
-// //     alert("logged in");
-// //     navigate("/home");
-// //   };
-// //   //   const rects = Array.from({ length: 5 }, (_, index) => (
-// //   //     <div key={index} className="secondhalf"></div>
-// //   //   ));
-// //   return (
-// //     <div className="signup-body">
-// //       <div className="firsthalf"></div>
-
-// //       <div className="second">
-// //         <div className="signup-bg">
-// //           <div className="signup-form">
-// //             <h1>Sign Up</h1>
-// //             <div className="signup-grid">
-// //               <input
-// //                 type="text"
-// //                 placeholder="username"
-// //                 className="username-box"
-// //               />
-// //               <input
-// //                 type="password"
-// //                 placeholder="password"
-// //                 className="password-box"
-// //               />
-// //             </div>
-
-// //             <button onClick={isvalid}>Login</button>
-// //             <a href="" onClick={handleClick} className="new-user">
-// //               new user?create account
-// //             </a>
-// //           </div>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default signup;
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -90,21 +40,39 @@ const Signup = () => {
     };
 
     try {
-      const res = await fetch("https://performly-backend.onrender.com/api/users/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        "https://performly-backend.onrender.com/api/users/signup",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await res.json();
 
       if (res.ok) {
         alert("Signup successful!");
-        navigate('/signin');
+
+        // Store the token if it's provided
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          console.log("Token stored:", data.token); // Debug log
+        }
+
+        const userId = data.user?.id;
+
+        if (category === "performer" && userId) {
+          // Redirect to performer profile creation
+          navigate(`/performer/${userId}`);
+        } else {
+          navigate("/signin");
+        }
       } else {
         alert(data.message || "Signup failed");
       }
     } catch (error) {
+      console.error("Signup error:", error);
       alert("Error during signup: " + error.message);
     }
   };
@@ -120,7 +88,7 @@ const Signup = () => {
           <input
             type="text"
             name="name"
-            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
+            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in px-3"
             placeholder="Enter Your Name"
             value={form.name}
             onChange={handleChange}
@@ -132,7 +100,7 @@ const Signup = () => {
           <input
             type="email"
             name="email"
-            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
+            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in px-3"
             placeholder="Enter Your Email"
             value={form.email}
             onChange={handleChange}
@@ -144,7 +112,7 @@ const Signup = () => {
           <input
             type="tel"
             name="phone"
-            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
+            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in px-3"
             placeholder="Enter Your Phone Number"
             value={form.phone}
             onChange={handleChange}
@@ -156,7 +124,7 @@ const Signup = () => {
           <input
             type="password"
             name="password"
-            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
+            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in px-3"
             placeholder="Enter Your Password"
             value={form.password}
             onChange={handleChange}
@@ -166,7 +134,7 @@ const Signup = () => {
 
         <div className="absolute top-[65%] left-[20%]">
           <select
-            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
+            className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in px-3"
             onChange={(e) => setCategory(e.target.value)}
             value={category}
             required
