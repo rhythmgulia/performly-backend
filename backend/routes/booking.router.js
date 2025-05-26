@@ -11,5 +11,6 @@ router.put('/:id/status', auth, BookingController.updateBookingStatus);
 router.get('/:id', auth, BookingController.getBookingById);
 router.put('/:id/payment', auth, BookingController.updatePaymentStatus);
 router.get('/by-client/:id', BookingController.getClientBookings);
+router.get('/price/:id',BookingController.detailsByID)
 
 module.exports = router;

@@ -1,4 +1,6 @@
+const booking = require("../db/models/booking");
 const Booking = require("../db/models/booking");
+const { Performer } = require("../db/models/performer");
 
 
 const createBooking = async (req, res) => {
@@ -38,7 +40,7 @@ const getAllBookings = async (req, res) => {
 
 const getBookingById = async (req, res) => {
     try {
-        const bookings = await Booking.find({ userId: req.user.userId }) // secured
+        const bookings = await Booking.find({ performerId:req.params.id }) // secured
       .populate("performerId", "name email")
       .sort({ createdAt: -1 });
         if (bookings.length === 0) {
@@ -119,27 +121,50 @@ const getPerformerBookings = async (req, res) => {
 };
 
 const updatePaymentStatus = async (req, res) => {
-    try {
-        const { paymentStatus } = req.body;
-        
-        const booking = await Booking.findById(req.params.id);
-        if (!booking) {
-            return res.status(404).json({ message: 'Booking not found' });
-        }
+  try {
+    const { paymentStatus } = req.body;
+    const bookingId = req.params.id;
 
-        // Only allow client to update payment status
-        if (booking.clientId.toString() !== req.user.userId) {
-            return res.status(403).json({ message: 'Not authorized' });
-        }
+    console.log("Booking ID:", bookingId);
+    console.log("Incoming paymentStatus:", paymentStatus);
 
-        booking.paymentStatus = paymentStatus;
-        await booking.save();
-
-        res.json(booking);
-    } catch (error) {
-        res.status(500).json({ message: 'Error updating payment status', error: error.message });
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
     }
+
+    booking.paymentStatus = paymentStatus || "Paid";
+    await booking.save();
+
+    res.json({ message: "Payment status updated", booking });
+  } catch (error) {
+    console.error("Payment update error:", error);
+    res.status(500).json({ message: 'Error updating payment status', error: error.message });
+  }
 };
+
+
+
+const detailsByID = async (req, res) => {
+  try {
+    const bookingDetails = await booking.findById(req.params.id);
+    if (!bookingDetails) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId });
+    if (!performerDetails) {
+      return res.status(404).json({ message: "Performer not found" });
+    }
+
+    return res.status(200).json({
+      price: performerDetails.pricing,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 
 module.exports = {
     createBooking,
@@ -149,5 +174,6 @@ module.exports = {
     deleteBooking,
     getClientBookings,
     getPerformerBookings,
-    updatePaymentStatus
+    updatePaymentStatus,
+    detailsByID
 };
