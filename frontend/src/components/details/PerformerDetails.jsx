@@ -65,22 +65,22 @@ const PerformerProfileForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <div className="h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8 space-y-6"
+        className="w-[40%] h-[70%] max-w-lg bg-white rounded-2xl border-23 border-white shadow-2xl transition-shadow duration-300 "
       >
-        <h2 className="text-2xl font-bold text-center text-gray-800">Create Performer Profile</h2>
+        <h2 className="text-4xl font-bold text-center text-gray-800">Create Performer Profile</h2>
 
         {/* Category */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Category</label>
+        <div className=' h-15 flex items-center gap-4 '> 
+          <label className="block text-xl font-bold">Category</label>
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-[50%] border border-1 rounded-lg"
           >
             <option value="">Select Category</option>
             {categoryOptions.map(cat => (
@@ -90,15 +90,15 @@ const PerformerProfileForm = () => {
         </div>
 
         {/* SubCategory */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Subcategory</label>
+        <div className='h-15 flex items-center gap-4'>
+          <label className="block text-xl font-bold">Subcategory</label>
           <select
             name="subCategory"
             value={formData.subCategory}
             onChange={handleChange}
             required
             disabled={!formData.category}
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-[50%] border border-1 rounded-lg"
           >
             <option value="">Select SubCategory</option>
             {formData.category && subCategoryMap[formData.category]?.map(sub => (
@@ -108,64 +108,67 @@ const PerformerProfileForm = () => {
         </div>
 
         {/* Experience */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Experience (Years)</label>
+        <div className='h-15 flex items-center gap-4'>
+          <label className="block text-xl font-bold">Experience (Years)</label>
           <input
             name="experience"
             type="number"
             placeholder="Enter years of experience"
             value={formData.experience}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-[50%] h-[60%] border border-1 rounded-lg"
             required
           />
         </div>
 
         {/* Pricing */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Pricing (₹)</label>
+        <div className='h-15 flex items-center gap-4'>
+          <label className="block text-xl font-bold">Pricing (₹)</label>
           <input
             name="pricing"
             type="number"
             placeholder="Enter pricing"
             value={formData.pricing}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-[50%] h-[60%] border border-1 rounded-lg"
             required
           />
         </div>
 
         {/* Specialties */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Specialties</label>
+        <div className='h-15 flex  items-center gap-4'>
+          <label className="block text-xl font-bold">Specialties</label>
           <input
             name="specialties"
             placeholder="Enter comma-separated specialties"
             onChange={(e) =>
               setFormData(prev => ({ ...prev, specialties: e.target.value.split(',') }))
             }
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-[50%] h-[60%] border border-1 rounded-lg"
           />
         </div>
 
         {/* Bio */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Bio</label>
+        <div className='h-20 flex items-center gap-4'>
+          <label className="block text-xl font-bold">Bio</label>
           <textarea
             name="bio"
             placeholder="Tell us about yourself"
             onChange={handleChange}
             rows="4"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md resize-none"
+            className="w-[50%] h-[100%] border border-1 rounded-lg"
           />
         </div>
-
-        <button
+        <div className='h-20 flex justify-center items-center gap-4'>
+           <button
           type="submit"
-          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition duration-200"
+          onClick={() => navigate(`/performerdashboard/${id}`)}
+          className="w-[30%] h-[40%] rounded-lg flex justify-center items-center bg-blue-500 "
         >
           Create Profile
         </button>
+        </div>
+       
       </form>
     </div>
   );

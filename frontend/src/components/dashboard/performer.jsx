@@ -55,17 +55,20 @@ const BookingsByPerformer = () => {
   if (loading) return <p className="text-center text-blue-500 text-lg">Loading bookings...</p>;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-indigo-700 text-center">Performer Bookings</h1>
+    <div className="h-screen w-screen bg-gray-100 ">
+      <div className='h-20 flex items-center justify-center bg-blue-600 text-white'>
+          <h1 className="text-3xl ">Performer Bookings</h1>
+      </div>
+    <div className=' h-full border-23 border-white bg-white flex justify-center'>
 
       {bookings.length === 0 ? (
         <p className="text-center text-gray-500">No bookings found for this performer.</p>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid h-50 gap-6">
           {bookings.map((booking) => (
             <div
               key={booking._id}
-              className="bg-white border rounded-xl p-5 shadow-md hover:shadow-xl transition duration-300"
+              className="bg-white border-23 border-white shadow-xl rounded-xl  hover:shadow-2xl transition duration-300"
             >
               <h3 className="text-lg font-semibold text-indigo-600 mb-2">
                 Booking Date: {new Date(booking.date).toLocaleDateString()}
@@ -77,7 +80,7 @@ const BookingsByPerformer = () => {
               {booking.status === 'Pending' && (
                 <div className="mt-4 flex gap-2">
                   <button
-                    className="w-full px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md text-sm font-medium"
+                    className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm font-medium"
                     onClick={() => handleUpdateStatus(booking._id, 'Confirmed')}
                   >
                     Confirm
@@ -94,6 +97,9 @@ const BookingsByPerformer = () => {
           ))}
         </div>
       )}
+    </div>
+
+      
     </div>
   );
 };
