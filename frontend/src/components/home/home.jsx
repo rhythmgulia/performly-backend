@@ -54,9 +54,9 @@ const Home = () => {
     <div className="main h-screen">
       <div>
         <header className="head fixed top-0 z-[1]  h-20 w-screen bg-transparent">
-          <div className="w-full flex justify-end absolute top-3 right-4">
+          <div className="w-full flex justify-end absolute top-6 right-20">
             <button
-              className=" h-12 w-28 bg-blue-900 text-white hover:bg-white hover:border-1 hover:width-0 hover:shadow-xl transition-all 300 ease-in-out hover:text-black"
+              className=" h-12 w-28 font-bold  text-2xl text-black hover:width-0 hover:shadow-xl transition-all 300 ease-in-out hover:text-black"
               onClick={handlenavigate}
             >
               LOGIN
@@ -75,10 +75,11 @@ const Home = () => {
             <div className="textaniamte h-2/5 w-full ">
               <LoaderText />
             </div>
-            <div className="third h-2/5 w-full">
-              <h1 className="border-l-30 hover:bg-blue-200 transition-all ease-in-out 200 text-black text-7xl">
+            <div className="third h-2/5 w-full ">
+              <h1 className="border-l-30 border-white text-black text-5xl">
                 Your Gateway to Incredible Gigs and Unforgettable Events!
               </h1>
+
             </div>
           </div>
           <div className="second h-screen w-3/5 ">
@@ -176,9 +177,9 @@ const Home = () => {
           PERFORMLY
         </div>
 
-        <div className="absolute top-1/3 left-1/6 ">
+        <div className="absolute top-1/3 right-1/6 ">
           <div className="w-full flex justify-center mt-20">
-            <div className="w-3/4 grid grid-cols-1 md:grid-cols-3 gap-50">
+            <div className="w-[80%]  grid grid-cols-1 md:grid-cols-3 gap-50">
               <div>
                 <h2 className="text-xl font-semibold mb-4">COMPANY</h2>
                 <ul className="space-y-2">
@@ -205,10 +206,10 @@ const Home = () => {
 
               <div>
                 <h2 className="text-xl font-semibold mb-4">FOLLOW US</h2>
-                <div className="flex gap-x-3">
+                <div className="grid grid-cols gap-x-3">
                   <a href="#" className="hover:text-gray-400">
                     Twitter
-                  </a>
+                  </a> 
                   <a href="#" className="hover:text-gray-400">
                     Instagram
                   </a>
