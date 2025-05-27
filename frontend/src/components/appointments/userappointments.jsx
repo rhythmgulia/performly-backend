@@ -41,7 +41,7 @@ const Userappointments = () => {
           {bookings.map((booking) => (
             <div key={booking._id} className="bg-white p-4 rounded shadow">
               <h3 className="text-lg font-semibold text-indigo-600 mb-1">
-                Performer: {booking.performerId?.name || "Unknown"}
+                Performer: {booking.performerId?.userId.name || "Unknown"}
               </h3>
               <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
               <p><strong>Time:</strong> {booking.time}</p>

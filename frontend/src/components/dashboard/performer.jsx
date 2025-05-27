@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const BookingsByPerformer = () => {
   const { id } = useParams(); 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate=useNavigate()
 
   const token = localStorage.getItem('token');
 
@@ -51,13 +52,17 @@ const BookingsByPerformer = () => {
       console.error('Error updating booking status:', error);
     }
   };
+  const handleYourProfile=()=>{
+    navigate(`/performerprofile/${id}`)
+  }
 
   if (loading) return <p className="text-center text-blue-500 text-lg">Loading bookings...</p>;
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-8 text-indigo-700 text-center">Performer Bookings</h1>
-
+      <button onClick={handleYourProfile}>Your Profile</button>
+      
       {bookings.length === 0 ? (
         <p className="text-center text-gray-500">No bookings found for this performer.</p>
       ) : (
