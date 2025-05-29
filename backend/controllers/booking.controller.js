@@ -1,5 +1,6 @@
 const booking = require("../db/models/booking");
 const Booking = require("../db/models/booking");
+const users=require('../db/models/user')
 const { Performer } = require("../db/models/performer");
 
 
@@ -95,22 +96,33 @@ const deleteBooking = async (req, res) => {
 const getClientBookings = async (req, res) => {
     try {
         const bookings = await Booking.find({ clientId: req.params.id })
-            .populate({
-                path: "performerId",
-                populate: {
-                    path: "userId",
-                    model: "users", // Must match the model name
-                    select: "name email"
-                }
-            })
             .sort({ createdAt: -1 });
 
         if (!bookings || bookings.length === 0) {
             return res.status(404).json({ message: "No bookings found for this client" });
         }
 
-        res.status(200).json(bookings);
+        // Add performerName while keeping original structure
+        const bookingsWithName = await Promise.all(bookings.map(async (booking) => {
+            const bookingObj = booking.toObject();
+            let performerName = 'Unknown Performer';
+            
+            if (bookingObj.performerId) {
+                const user = await users.findOne({ _id: bookingObj.performerId });
+                if (user) {
+                    performerName = user.name;
+                }
+            }
+
+            return {
+                ...bookingObj,
+                performerName
+            };
+        }));
+
+        res.status(200).json(bookingsWithName);
     } catch (error) {
+        console.error("Error in getClientBookings:", error);
         res.status(500).json({ message: "Error fetching bookings", error: error.message });
     }
 };
@@ -159,13 +171,17 @@ const detailsByID = async (req, res) => {
             return res.status(404).json({ message: "Booking not found" });
         }
 
-        const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId });
+        const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId })
+            .populate("userId", "name email"); // Move .populate to this line
+
         if (!performerDetails) {
             return res.status(404).json({ message: "Performer not found" });
         }
 
         return res.status(200).json({
             price: performerDetails.pricing,
+            performers: performerDetails.userId, // returns populated user object with name & email
+            booking:bookingDetails
         });
     } catch (error) {
         return res.status(500).json({ message: "Server error", error: error.message });
