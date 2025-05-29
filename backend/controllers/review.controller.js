@@ -10,7 +10,7 @@ class ReviewController {
             const booking = await Booking.findOne({
                 performerId,
                 clientId: req.user.userId,
-                status: 'Completed'
+                status: 'Confirmed'
             });
 
             if (!booking) {
