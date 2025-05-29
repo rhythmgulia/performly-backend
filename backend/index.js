@@ -18,8 +18,6 @@ app.use(bodyParser.json());
 const userRoutes = require('./routes/user.router');
 const performerRoutes = require('./routes/performer.router');
 const bookingRoutes = require('./routes/booking.router');
-const notificationRoutes = require('./routes/notification.router');
-const reviewRoutes = require('./routes/review.router');
 const clientRoutes = require('./routes/client.router');
 const paymentRouter=require('./routes/Payment.router')
 
@@ -28,8 +26,6 @@ const paymentRouter=require('./routes/Payment.router')
 app.use('/api/users', userRoutes);
 app.use('/api/performers', performerRoutes);
 app.use('/api/bookings', bookingRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/reviews', reviewRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/payment', paymentRouter);
 
