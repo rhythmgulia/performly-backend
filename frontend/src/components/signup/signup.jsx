@@ -78,8 +78,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="signinbg h-screen w-screen flex justify-center items-center">
-      <div className="signin-body h-[80%] w-[30%] bg-transparent border-0.5 hover:scale-103 hover:shadow-xl hover:shadow-black transition-all ease-in relative rounded-4xl">
+    <div className="signinbg h-screen w-screen  bg-gradient-to-t from-sky-950  to-orange-100 flex justify-center items-center">
+      <div className="signin-body h-[90%] w-[30%] bg-transparent shadow-2xl hover:shadow-black transition-all ease-in relative rounded-4xl">
         <div className="text absolute top-[10%] left-[35%] text-5xl">
           <h1>Sign Up</h1>
         </div>
