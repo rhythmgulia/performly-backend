@@ -59,13 +59,6 @@ class UserController {
         return res.status(400).json({ message: 'Invalid phone or password' });
       }
 
-      // let performerId = null;
-      // if (user.type === 1) {
-      //   const performer = await Performer.findOne({ userId: user._id });
-      //   performerId = performer?._id || null;
-      // }
-
-      // Fixed: Use consistent JWT payload structure
       const token = jwt.sign(
         { userId: user._id, type: user.type }, 
         process.env.JWT_SECRET || 'default_secret', 
@@ -79,7 +72,6 @@ class UserController {
           name: user.name,
           phone: user.phone,
           type: user.type,
-          // performerId
         }
       });
     } catch (error) {
