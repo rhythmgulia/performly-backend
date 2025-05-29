@@ -40,9 +40,9 @@ const getAllBookings = async (req, res) => {
 
 const getBookingById = async (req, res) => {
     try {
-        const bookings = await Booking.find({ performerId:req.params.id }) // secured
-      .populate("performerId", "name email")
-      .sort({ createdAt: -1 });
+        const bookings = await Booking.find({ performerId: req.params.id }) // secured
+            .populate("performerId", "name email")
+            .sort({ createdAt: -1 });
         if (bookings.length === 0) {
             return res.status(404).json({ message: "No bookings found for this performer" });
         }
@@ -93,9 +93,16 @@ const deleteBooking = async (req, res) => {
 // Add these methods to the existing booking controller
 
 const getClientBookings = async (req, res) => {
-     try {
+    try {
         const bookings = await Booking.find({ clientId: req.params.id })
-            .populate("performerId", "name email")
+            .populate({
+                path: "performerId",
+                populate: {
+                    path: "userId",
+                    model: "users", // Must match the model name
+                    select: "name email"
+                }
+            })
             .sort({ createdAt: -1 });
 
         if (!bookings || bookings.length === 0) {
@@ -121,48 +128,48 @@ const getPerformerBookings = async (req, res) => {
 };
 
 const updatePaymentStatus = async (req, res) => {
-  try {
-    const { paymentStatus } = req.body;
-    const bookingId = req.params.id;
+    try {
+        const { paymentStatus } = req.body;
+        const bookingId = req.params.id;
 
-    console.log("Booking ID:", bookingId);
-    console.log("Incoming paymentStatus:", paymentStatus);
+        console.log("Booking ID:", bookingId);
+        console.log("Incoming paymentStatus:", paymentStatus);
 
-    const booking = await Booking.findById(bookingId);
-    if (!booking) {
-      return res.status(404).json({ message: 'Booking not found' });
+        const booking = await Booking.findById(bookingId);
+        if (!booking) {
+            return res.status(404).json({ message: 'Booking not found' });
+        }
+
+        booking.paymentStatus = paymentStatus || "Paid";
+        await booking.save();
+
+        res.json({ message: "Payment status updated", booking });
+    } catch (error) {
+        console.error("Payment update error:", error);
+        res.status(500).json({ message: 'Error updating payment status', error: error.message });
     }
-
-    booking.paymentStatus = paymentStatus || "Paid";
-    await booking.save();
-
-    res.json({ message: "Payment status updated", booking });
-  } catch (error) {
-    console.error("Payment update error:", error);
-    res.status(500).json({ message: 'Error updating payment status', error: error.message });
-  }
 };
 
 
 
 const detailsByID = async (req, res) => {
-  try {
-    const bookingDetails = await booking.findById(req.params.id);
-    if (!bookingDetails) {
-      return res.status(404).json({ message: "Booking not found" });
-    }
+    try {
+        const bookingDetails = await booking.findById(req.params.id);
+        if (!bookingDetails) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
 
-    const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId });
-    if (!performerDetails) {
-      return res.status(404).json({ message: "Performer not found" });
-    }
+        const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId });
+        if (!performerDetails) {
+            return res.status(404).json({ message: "Performer not found" });
+        }
 
-    return res.status(200).json({
-      price: performerDetails.pricing,
-    });
-  } catch (error) {
-    return res.status(500).json({ message: "Server error", error: error.message });
-  }
+        return res.status(200).json({
+            price: performerDetails.pricing,
+        });
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
 };
 
 

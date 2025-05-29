@@ -53,9 +53,11 @@ const Userappointments = () => {
       ) : (
         <div className="grid grid-cols  gap-6 w-[90%] mx-auto">
           {bookings.map((booking) => (
+
             <div key={booking._id} className="bg-sky-900 border-23 border-sky-900 text-white rounded-2xl hover:shadow-xl hover:scale-102  transition-all ease-in-out duration-300 p-5">
               <h3 className="text-lg font-semibold  mb-1">
                 Performer: {booking.performerId?.name || "Unknown"}
+
               </h3>
               <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
               <p><strong>Time:</strong> {booking.time}</p>
