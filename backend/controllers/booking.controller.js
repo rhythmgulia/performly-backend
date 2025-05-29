@@ -13,7 +13,7 @@ const createBooking = async (req, res) => {
             performerId,
             clientId,
             date,
-            time, // ✅ Save time
+            time, 
             location
         });
 
@@ -41,7 +41,7 @@ const getAllBookings = async (req, res) => {
 
 const getBookingById = async (req, res) => {
     try {
-        const bookings = await Booking.find({ performerId: req.params.id }) // secured
+        const bookings = await Booking.find({ performerId: req.params.id }) 
             .populate("performerId", "name email")
             .sort({ createdAt: -1 });
         if (bookings.length === 0) {
@@ -91,7 +91,6 @@ const deleteBooking = async (req, res) => {
 };
 
 
-// Add these methods to the existing booking controller
 
 const getClientBookings = async (req, res) => {
     try {
@@ -172,7 +171,7 @@ const detailsByID = async (req, res) => {
         }
 
         const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId })
-            .populate("userId", "name email"); // Move .populate to this line
+            .populate("userId", "name email"); 
 
         if (!performerDetails) {
             return res.status(404).json({ message: "Performer not found" });
