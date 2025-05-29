@@ -4,19 +4,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loadingg from "../animate/loading";
 import Footer from "../footer/footer";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const BookingsByPerformer = () => {
   const { id } = useParams();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [performer, setPerformer] = useState(null);
-  const [filterStatus, setFilterStatus] = useState("All"); 
+  const [filterStatus, setFilterStatus] = useState("All");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await axios.get(`http://localhost:8083/api/bookings/${id}`, {
+        const res = await axios.get(`${BACKEND_URL}/api/bookings/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -35,7 +37,7 @@ const BookingsByPerformer = () => {
   useEffect(() => {
     const fetchPerformer = async () => {
       try {
-        const res = await axios.get(`http://localhost:8083/api/performers/${id}`);
+        const res = await axios.get(`${BACKEND_URL}/api/performers/${id}`);
         setPerformer(res.data);
       } catch (err) {
         console.error(
@@ -50,7 +52,7 @@ const BookingsByPerformer = () => {
   const handleUpdateStatus = async (bookingId, status) => {
     try {
       const res = await axios.put(
-        `http://localhost:8083/api/bookings/${bookingId}/status`,
+        `${BACKEND_URL}/api/bookings/${bookingId}/status`,
         { status },
         {
           headers: {
@@ -100,31 +102,27 @@ const BookingsByPerformer = () => {
         </div>
 
         <div className="flex gap-4 justify-center my-6">
-          {["All", "Pending", "Confirmed", "Rejected"].map(
-            (status) => (
-              <button
-                key={status}
-                className={`px-4 py-2 rounded-lg shadow ${
-                  filterStatus === status
-                    ? "bg-sky-600 text-white"
-                    : "bg-white border border-sky-600 text-sky-600"
-                }`}
-                onClick={() => setFilterStatus(status)}
-              >
-                {status}
-              </button>
-            )
-          )}
+          {["All", "Pending", "Confirmed", "Rejected"].map((status) => (
+            <button
+              key={status}
+              className={`px-4 py-2 rounded-lg shadow ${
+                filterStatus === status
+                  ? "bg-sky-600 text-white"
+                  : "bg-white border border-sky-600 text-sky-600"
+              }`}
+              onClick={() => setFilterStatus(status)}
+            >
+              {status}
+            </button>
+          ))}
         </div>
 
         <div className="h-[40%] w-full flex justify-center">
           <div className="h-full w-[90%] pt-20 flex justify-center">
             {filteredBookings.length === 0 ? (
-              <p className="text-center text-gray-500">
-                
-              </p>
+              <p className="text-center text-gray-500">No bookings found.</p>
             ) : (
-              <div className="grid grid-cols  pb-10 gap-8 w-full max-w-6xl">
+              <div className="grid grid-cols pb-10 gap-8 w-full max-w-6xl">
                 {filteredBookings.map((booking) => (
                   <div
                     key={booking._id}
@@ -133,31 +131,21 @@ const BookingsByPerformer = () => {
                     <h3 className="text-lg font-semibold mb-2">
                       Booking Date: {new Date(booking.date).toLocaleDateString()}
                     </h3>
-                    <p>
-                      <strong>Location:</strong> {booking.location}
-                    </p>
-                    <p>
-                      <strong>Status:</strong> {booking.status}
-                    </p>
-                    <p>
-                      <strong>Payment:</strong> {booking.paymentStatus}
-                    </p>
+                    <p><strong>Location:</strong> {booking.location}</p>
+                    <p><strong>Status:</strong> {booking.status}</p>
+                    <p><strong>Payment:</strong> {booking.paymentStatus}</p>
 
                     {booking.status === "Pending" && (
                       <div className="mt-4 flex gap-2">
                         <button
                           className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm font-medium"
-                          onClick={() =>
-                            handleUpdateStatus(booking._id, "Confirmed")
-                          }
+                          onClick={() => handleUpdateStatus(booking._id, "Confirmed")}
                         >
                           Confirm
                         </button>
                         <button
                           className="w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium"
-                          onClick={() =>
-                            handleUpdateStatus(booking._id, "Rejected")
-                          }
+                          onClick={() => handleUpdateStatus(booking._id, "Rejected")}
                         >
                           Reject
                         </button>

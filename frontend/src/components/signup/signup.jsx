@@ -6,6 +6,8 @@ const Signup = () => {
   const [category, setCategory] = useState(""); 
   const navigate = useNavigate();
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -34,7 +36,7 @@ const Signup = () => {
     };
 
     try {
-      const res = await fetch("https://performly-backend.onrender.com/api/users/signup", {
+      const res = await fetch(`${BACKEND_URL}/api/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -63,8 +65,6 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-t from-sky-950 to-orange-100 p-4">
-
-
       <div className="w-full max-w-md bg-transparent rounded-2xl shadow-2xl z-[2] shadow-black p-8">
         <h1 className="text-4xl font-bold text-center mb-6">Sign Up</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -128,7 +128,6 @@ const Signup = () => {
           </a>
         </p>
       </div>
-           
     </div>
   );
 };

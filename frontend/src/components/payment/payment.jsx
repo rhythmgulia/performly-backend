@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import PaymentPic from "../animate/paymentlottie";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const PaymentPage = () => {
   const { bookingId } = useParams();
@@ -16,7 +17,7 @@ const PaymentPage = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:8083/api/bookings/price/${bookingId}`,
+          `${BACKEND_URL}/api/bookings/price/${bookingId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -37,7 +38,7 @@ const PaymentPage = () => {
       const amount = price;
 
       const orderRes = await axios.post(
-        "http://localhost:8083/api/payment/createOrder",
+        `${BACKEND_URL}/api/payment/createOrder`,
         { amount }
       );
 
@@ -52,7 +53,7 @@ const PaymentPage = () => {
         order_id,
         handler: async function (response) {
           const verifyRes = await axios.post(
-            "http://localhost:8083/api/payment/verifyPayment",
+            `${BACKEND_URL}/api/payment/verifyPayment`,
             {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -62,7 +63,7 @@ const PaymentPage = () => {
 
           if (verifyRes.data.message === "Payment verified") {
             await axios.put(
-              `http://localhost:8083/api/bookings/${bookingId}/payment`,
+              `${BACKEND_URL}/api/bookings/${bookingId}/payment`,
               { paymentStatus: "Paid" },
               {
                 headers: {
@@ -91,14 +92,9 @@ const PaymentPage = () => {
     }
   };
 
-
-  
-
-   return (
+  return (
     <div className="h-screen bg-white text-center">
       <div className="h-[20%] flex items-center  border-sky-900 p-10 bg-sky-900 text-white">
-
- 
         <h1 className="text-7xl font-bold mb-4">Your Payment</h1>
       </div>
       <div className="h-[80%] w-full grid grid-cols-2 bg-gray-100">
@@ -108,9 +104,7 @@ const PaymentPage = () => {
           </div>
         </div>
 
-
         <div className="flex items-center justify-center">
-
           {error && <p className="text-red-500">{error}</p>}
           {booking ? (
             <div className="bg-white w-[80%] h-[90%]  grid gap-2 border-white rounded-2xl shadow-xl p-13 mt-8">
