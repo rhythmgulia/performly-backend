@@ -6,7 +6,6 @@ const Signup = () => {
   const [category, setCategory] = useState(""); 
   const navigate = useNavigate();
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,7 +35,7 @@ const Signup = () => {
     };
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/users/signup`, {
+      const res = await fetch(`https://performly-backend.onrender.com/api/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -263,7 +263,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const PerformerProfileForm = () => {
   const { id } = useParams();
@@ -308,7 +307,7 @@ const PerformerProfileForm = () => {
     const token = localStorage.getItem("token");
     try {
       await axios.post(
-        `${BACKEND_URL}/api/performers/profile/${id}`,
+        `https://performly-backend.onrender.com/api/performers/profile/${id}`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

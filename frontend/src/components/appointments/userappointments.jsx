@@ -4,7 +4,6 @@ import axios from 'axios';
 import LottiePic from "../animate/lottie4";
 import Loadingg from "../animate/loading";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Userappointments = () => {
   const [bookings, setBookings] = useState([]);
@@ -17,7 +16,7 @@ const Userappointments = () => {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${BACKEND_URL}/api/bookings/by-client/${id}`, {
+        const res = await axios.get(`https://performly-backend.onrender.com/api/bookings/by-client/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setBookings(res.data);
