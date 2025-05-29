@@ -171,13 +171,17 @@ const detailsByID = async (req, res) => {
             return res.status(404).json({ message: "Booking not found" });
         }
 
-        const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId });
+        const performerDetails = await Performer.findOne({ userId: bookingDetails.performerId })
+            .populate("userId", "name email"); // Move .populate to this line
+
         if (!performerDetails) {
             return res.status(404).json({ message: "Performer not found" });
         }
 
         return res.status(200).json({
             price: performerDetails.pricing,
+            performers: performerDetails.userId, // returns populated user object with name & email
+            booking:bookingDetails
         });
     } catch (error) {
         return res.status(500).json({ message: "Server error", error: error.message });

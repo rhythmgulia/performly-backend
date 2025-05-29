@@ -23,7 +23,7 @@ const PaymentPage = () => {
         );
         setBooking(res.data.booking);
         setPrice(res.data.price);
-        setPerformer(res.data.performer);
+        setPerformer(res.data.performers); // updated key
       } catch (err) {
         setError("Error fetching booking details");
       }
