@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import LottiePic from "../animate/lottie4"
 
 const Userappointments = () => {
   const [bookings, setBookings] = useState([]);
@@ -29,12 +30,19 @@ const Userappointments = () => {
   };
 
   return (
-    <div className="h-full bg-blue-100 w-full">
-      <div className='h-20 flex items-center justify-center bg-indigo-600 text-white'>
-         <h2 className="text-2xl font-bold mb-4 text-center">Your Appointments</h2>
+    <div className="h-full w-full">
+      <div className='h-30 w-full flex items-center   bg-gradient-to-b from-sky-900 to-white border-sky-900  text-black'>
+         <h2 className="text-5xl font-bold mb-4 ml-10 text-center">Your Appointments</h2>
       </div>
 
-      <div className='h-full w-full flex border-23 border-blue-100 justify-center '>
+      <div className=' w-full grid grid-cols-2 flex border-43 border-white  justify-center '>
+        <div className=''>
+
+          <div className='h-200 w-200  fixed'>
+
+            <LottiePic />
+          </div>
+        </div>
    
 
     
@@ -43,10 +51,10 @@ const Userappointments = () => {
       {bookings.length === 0 ? (
         <p className="text-center text-gray-600">No appointments found.</p>
       ) : (
-        <div className="grid grid-cols-4 gap-6 w-[90%] mx-auto">
+        <div className="grid grid-cols  gap-6 w-[90%] mx-auto">
           {bookings.map((booking) => (
-            <div key={booking._id} className="bg-white border-23 border-white rounded hover:shadow-xl transition-shadow duration-300 p-5">
-              <h3 className="text-lg font-semibold text-indigo-600 mb-1">
+            <div key={booking._id} className="bg-sky-900 border-23 border-sky-900 text-white rounded-2xl hover:shadow-xl hover:scale-102  transition-all ease-in-out duration-300 p-5">
+              <h3 className="text-lg font-semibold  mb-1">
                 Performer: {booking.performerId?.name || "Unknown"}
               </h3>
               <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
@@ -58,7 +66,7 @@ const Userappointments = () => {
               {booking.status === "Confirmed" && booking.paymentStatus !== "Paid" && (
                 <button
                   onClick={() => handlePaymentRedirect(booking._id,booking.pricing)}
-                  className=" bg-indigo-600 hover:bg-indigo-800 w-43 h-12 text-white rounded"
+                  className=" bg-indigo-600 hover:bg-orange-100 hover:text-black  w-43 h-12 text-white rounded"
                 >
                   Make Payment
                 </button>

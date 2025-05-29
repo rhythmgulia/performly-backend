@@ -82,7 +82,7 @@ const Loader = () => {
   return (
     <div className="background-screen h-full w-full ">
       <div className="typewriter-text h-90 w-full flex items-center 
-      border-40 border-t-60 border-white  text-blue-800 text-8xl font-bold">
+      border-l-33 border-orange-100 text-sky-900 text-8xl font-bold">
         {displayedText}
       </div>
     </div>

@@ -1,7 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const uf = () => {
-  
+
+  const navigateto = useNavigate();
+  const handlenavigate = () => {
+    navigateto("/signin");
+  };
   const rotateCards = () => {
     const cards = document.querySelectorAll(".cards");
     let angle = 0;
@@ -16,12 +21,9 @@ const uf = () => {
     });
   };
 
-
-  
   useEffect(() => {
     rotateCards();
   }, []);
-
 
   useEffect(() => {
     const stackArea = document.querySelector(".stackarea");
@@ -46,38 +48,58 @@ const uf = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll); // ✅ Cleanup
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
     <>
-    <div className="stackarea h-[300vh] w-full bg-white flex">
-     <div className='w-1/2 bg-blue-200 basis-[50%] sticky top-0 h-dvh'></div>
-     <div className='w-1/2 bg-blue-500 basis-[50%] relative sticky top-0 h-dvh'>
-     <div className="cards h-140 w-140 absolute top-1/5 left-1/5 bg-blue-900 rounded-xl"></div>
-     <div className="cards h-140 w-140 absolute top-1/5 left-1/5 bg-blue-800 rounded-xl"></div>
-     <div className="cards h-140 w-140 absolute top-1/5 left-1/5 bg-blue-900 rounded-xl"></div>
-     <div className="cards h-140 w-140 absolute top-1/5 left-1/5 bg-blue-600 rounded-xl"></div>
-         
-     </div>  
-    </div>
+      <div className="stackarea h-[300vh] w-full bg-orange-100 flex">
+        <div className="w-1/2  basis-[50%] sticky top-0 h-dvh">
+          <div className="h-full w-full  flex items-center justify-center">
+            <h1 className="text-7xl font-bold">What we OFFER !!</h1>
+          </div>
+        </div>
+        <div className="w-1/2  basis-[50%] relative sticky top-0 h-dvh">
+          <div className="cards h-140 w-140 absolute top-1/5 left-1/5  border-1 rounded-xl flex justify-center border-l-43 border-r-43 border-blue-200 text-xl font-medium bg-blue-200 items-center">
+            {" "}
+            Create a captivating profile with images, videos, and a compelling
+            bio that highlights your talent and experience. Manage Your Gigs:
+            Easily track your bookings, update availability, and get real-time
+            notifications. Get Paid Securely: Receive hassle-free, timely
+            payments with seamless integrations. Grow Your Reputation: Collect
+            ratings and reviews to enhance your visibility in the gig community.{" "}
+          </div>
+          <div className="cards h-140 w-140 absolute bg-blue-300 top-1/5 left-1/5 border-1 rounded-xl flex justify-center  border-l-43 border-r-43 border-blue-300 text-xl font-medium items-center">
+            <p>
+              {" "}
+              Browse a wide range of performers—musicians, magicians, comedians,
+              dancers, and more. Filter & Find: Search by category, price,
+              availability, and location to find your perfect match. Hassle-free
+              Bookings: Send gig requests, confirm availability, and make secure
+              payments—all in one place.
+            </p>
+          </div>
+          {/* <div className="cards h-140 w-140 absolute top-1/5 left-1/5 border-1 rounded-xl">
+            <div className="grid grid-cols-5">
+              <div className=" border-1 w-full">1</div>
+              <div className="border-1 w-full">2</div>{" "}
+              <div className=" w-full border-1">3</div>{" "}
+              <div className="border-1 w-full">4</div>{" "}
+              <div className="border-1 w-full">5</div>
+            </div>
+          </div> */}
+          <div className="cards h-140 w-140 absolute top-1/5 left-1/5 border-1 rounded-xl flex justify-center items-center ">
+            {" "}
+            <button    onClick={handlenavigate} className="border-1 w-33 h-13 rounded-xl hover:bg-sky-900 transition-all ease-in-out dusration-200 hover:text-white ">
+              LOGIN
+            </button>
+          </div>
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default uf
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default uf;
 
 // import React, { useEffect, useRef, useState } from "react";
 
@@ -145,10 +167,9 @@ export default uf
 //           </div>
 //         </div>
 
-  
 //         <div className="h-full w-1/2 flex justify-center items-center bg-white relative">
 //           <div className="h-full w-[90%] shadow-lg relative bg-transparent">
-       
+
 //             {cardData.map((card, i) => {
 //               const angle = awayCards[i] ? 0 : -i * 10;
 //               const translateY = awayCards[i] ? "-translate-y-[120vh]" : "";
@@ -172,4 +193,3 @@ export default uf
 //     </div>
 //   );
 // }
-
