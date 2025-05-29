@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loadingg from "../animate/loading";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Signin = () => {
   const [form, setForm] = useState({ phone: "", password: "" });
@@ -34,7 +33,7 @@ const Signin = () => {
     setLoading(true); 
     try {
       const res = await axios.post(
-        `${BACKEND_URL}/api/users/login`,
+        `https://performly-backend.onrender.com/api/users/login`,
         {
           phone: Number(phone),
           password,

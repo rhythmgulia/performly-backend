@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import PaymentPic from "../animate/paymentlottie";
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const PaymentPage = () => {
   const { bookingId } = useParams();
@@ -17,14 +16,14 @@ const PaymentPage = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `${BACKEND_URL}/api/bookings/price/${bookingId}`,
+          `https://performly-backend.onrender.com/api/bookings/price/${bookingId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         setBooking(res.data.booking);
         setPrice(res.data.price);
-        setPerformer(res.data.performers); // updated key
+        setPerformer(res.data.performers);
       } catch (err) {
         setError("Error fetching booking details");
       }
@@ -38,7 +37,7 @@ const PaymentPage = () => {
       const amount = price;
 
       const orderRes = await axios.post(
-        `${BACKEND_URL}/api/payment/createOrder`,
+        `https://performly-backend.onrender.com/api/payment/createOrder`,
         { amount }
       );
 
@@ -48,12 +47,12 @@ const PaymentPage = () => {
         key: "rzp_test_L1sqG4NKJOJaSb",
         amount: orderAmount,
         currency,
-        name: "Gig Booking",
+        name: performer?.name,
         description: "Booking Payment",
         order_id,
         handler: async function (response) {
           const verifyRes = await axios.post(
-            `${BACKEND_URL}/api/payment/verifyPayment`,
+            `https://performly-backend.onrender.com/api/payment/verifyPayment`,
             {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
@@ -63,7 +62,7 @@ const PaymentPage = () => {
 
           if (verifyRes.data.message === "Payment verified") {
             await axios.put(
-              `${BACKEND_URL}/api/bookings/${bookingId}/payment`,
+              `https://performly-backend.onrender.com/api/bookings/${bookingId}/payment`,
               { paymentStatus: "Paid" },
               {
                 headers: {
@@ -93,57 +92,56 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="h-screen bg-white text-center">
-      <div className="h-[20%] flex items-center  border-sky-900 p-10 bg-sky-900 text-white">
-        <h1 className="text-7xl font-bold mb-4">Your Payment</h1>
+    <div className="min-h-screen bg-white text-center">
+      {/* Header */}
+      <div className="h-[20%] flex items-center justify-center border-sky-900 p-6 md:p-10 bg-sky-900 text-white">
+        <h1 className="text-4xl md:text-7xl font-bold">Your Payment</h1>
       </div>
-      <div className="h-[80%] w-full grid grid-cols-2 bg-gray-100">
-        <div className="flex items-center justify-center">
-          <div className="h-100 w-100">
+
+      {/* Main Content */}
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 bg-gray-100">
+        {/* Left Column - Animation */}
+        <div className="flex items-center justify-center p-6">
+          <div className="w-full max-w-xs md:max-w-md lg:max-w-lg">
             <PaymentPic />
           </div>
         </div>
 
-        <div className="flex items-center justify-center">
+        {/* Right Column - Booking Summary */}
+        <div className="flex items-center justify-center p-6">
           {error && <p className="text-red-500">{error}</p>}
           {booking ? (
-            <div className="bg-white w-[80%] h-[90%]  grid gap-2 border-white rounded-2xl shadow-xl p-13 mt-8">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6 pb-4 border-b-2 border-gray-200">
-                  Booking Summary
-                </h1>
+            <div className="bg-white w-full max-w-2xl p-6 rounded-2xl shadow-xl">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 border-b pb-4 border-gray-200">
+                Booking Summary
+              </h1>
 
-                <div className="space-y-6 text-left max-w-2xl mx-auto">
-                  <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                    <span className="text-xl font-semibold text-gray-600">Performer:</span>
-                    <span className="text-xl font-bold text-gray-900">{performer?.name}</span>
-                  </div>
-
-                  <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                    <span className="text-xl font-semibold text-gray-600">Date:</span>
-                    <span className="text-xl text-gray-900">{booking.date ? new Date(booking.date).toLocaleDateString() : "-"}</span>
-                  </div>
-
-                  <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                    <span className="text-xl font-semibold text-gray-600">Time:</span>
-                    <span className="text-xl text-gray-900">{booking.time || "-"}</span>
-                  </div>
-
-                  <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                    <span className="text-xl font-semibold text-gray-600">Location:</span>
-                    <span className="text-xl text-gray-900 text-right max-w-xs">{booking.location || "-"}</span>
-                  </div>
-
-                  <div className="flex justify-between items-center py-4 mt-6 bg-sky-50 rounded-lg px-4">
-                    <span className="text-2xl font-bold text-gray-800">Total Amount:</span>
-                    <span className="text-2xl font-bold text-sky-800">₹{price}</span>
-                  </div>
+              <div className="space-y-4 text-left">
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-lg font-semibold text-gray-600">Performer:</span>
+                  <span className="text-lg font-bold text-gray-900">{performer?.name}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-lg font-semibold text-gray-600">Date:</span>
+                  <span className="text-lg text-gray-900">{booking.date ? new Date(booking.date).toLocaleDateString() : "-"}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-lg font-semibold text-gray-600">Time:</span>
+                  <span className="text-lg text-gray-900">{booking.time || "-"}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-100">
+                  <span className="text-lg font-semibold text-gray-600">Location:</span>
+                  <span className="text-lg text-gray-900 text-right max-w-[60%]">{booking.location || "-"}</span>
+                </div>
+                <div className="flex justify-between items-center py-4 mt-6 bg-sky-50 rounded-lg px-4">
+                  <span className="text-xl font-bold text-gray-800">Total Amount:</span>
+                  <span className="text-xl font-bold text-sky-800">₹{price}</span>
                 </div>
               </div>
 
               <button
-                className="w-53 h-23 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-xl font-semibold rounded-xl hover:from-indigo-700 hover:to-indigo-800 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
                 onClick={handlePayment}
+                className="w-full mt-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white text-lg md:text-xl font-semibold rounded-xl hover:from-indigo-700 hover:to-indigo-800 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Pay with Razorpay
               </button>

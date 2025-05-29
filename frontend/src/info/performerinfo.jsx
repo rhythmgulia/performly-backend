@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8083";
 
 const Performerinfo = () => {
   const { id } = useParams();
@@ -22,7 +21,7 @@ const Performerinfo = () => {
     const fetchPerformer = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${BACKEND_URL}/api/performers/${id}`);
+        const res = await axios.get(`https://performly-backend.onrender.com/api/performers/${id}`);
         setPerformer(res.data);
         setError("");
       } catch (err) {
