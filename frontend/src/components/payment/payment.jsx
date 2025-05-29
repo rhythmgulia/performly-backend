@@ -80,15 +80,20 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100 text-center">
-      <h1 className="text-2xl font-bold mb-4">Complete Your Payment</h1>
+    <div className="h-screen p-6 bg-gray-100 text-center">
+      <div className="h-[20%] flex items-center justify-center bg-indigo-600 text-white">
+        <h1 className="text-7xl  font-bold mb-4">Complete Your Payment</h1>
+      </div>
+      <div className="h-[80%] w-full bg-gray-100 flex justify-center items-center">
+
+      
       {error && <p className="text-red-500">{error}</p>}
       {booking ? (
-        <div className="bg-white p-6 rounded shadow max-w-md mx-auto">
-          <p><strong>Performer:</strong> {booking.performerId?.name}</p>
-          <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
-          <p><strong>Time:</strong> {booking.time}</p>
-          <p><strong>Location:</strong> {booking.location}</p>
+        <div className="bg-white h-[60%] w-[50%] grid rounded shadow max-w-md mx-auto">
+          <p className="text-4xl"><strong>Performer:</strong> {booking.performerId?.name}</p>
+          <p className="text-4xl"><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
+          <p className="text-4xl"><strong>Time:</strong> {booking.time}</p>
+          <p className="text-4xl"><strong>Location:</strong> {booking.location}</p>
           <p className="mt-4 font-bold">Amount:{booking.price} </p>
           <button
             className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
@@ -100,6 +105,7 @@ const PaymentPage = () => {
       ) : (
         <p>Loading booking details...</p>
       )}
+      </div>
     </div>
   );
 };

@@ -29,17 +29,23 @@ const Userappointments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h2 className="text-2xl font-bold mb-4 text-center">Your Appointments</h2>
+    <div className="h-full bg-blue-100 w-full">
+      <div className='h-20 flex items-center justify-center bg-indigo-600 text-white'>
+         <h2 className="text-2xl font-bold mb-4 text-center">Your Appointments</h2>
+      </div>
 
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      <div className='h-full w-full flex border-23 border-blue-100 justify-center '>
+   
+
+    
+        {error && <p className="text-red-500 text-center">{error}</p>}
 
       {bookings.length === 0 ? (
         <p className="text-center text-gray-600">No appointments found.</p>
       ) : (
-        <div className="grid gap-6 max-w-3xl mx-auto">
+        <div className="grid grid-cols-4 gap-6 w-[90%] mx-auto">
           {bookings.map((booking) => (
-            <div key={booking._id} className="bg-white p-4 rounded shadow">
+            <div key={booking._id} className="bg-white border-23 border-white rounded hover:shadow-xl transition-shadow duration-300 p-5">
               <h3 className="text-lg font-semibold text-indigo-600 mb-1">
                 Performer: {booking.performerId?.userId.name || "Unknown"}
               </h3>
@@ -52,7 +58,7 @@ const Userappointments = () => {
               {booking.status === "Confirmed" && booking.paymentStatus !== "Paid" && (
                 <button
                   onClick={() => handlePaymentRedirect(booking._id,booking.pricing)}
-                  className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded"
+                  className=" bg-indigo-600 hover:bg-indigo-800 w-43 h-12 text-white rounded"
                 >
                   Make Payment
                 </button>
@@ -61,6 +67,10 @@ const Userappointments = () => {
           ))}
         </div>
       )}
+     
+     
+    </div>
+      
     </div>
   );
 };
