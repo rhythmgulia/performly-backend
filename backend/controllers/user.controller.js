@@ -27,15 +27,8 @@ class UserController {
         await client.save();
       }
 
-      const token = jwt.sign(
-        { userId: user._id, type: user.type },
-        process.env.JWT_SECRET || 'default_secret',
-        { expiresIn: '24h' }
-      );
-
       res.status(201).json({
-        message: 'User created successfully',
-        token, 
+        message: 'User created successfully', 
         user: {
           id: user._id,
           name: user.name,
