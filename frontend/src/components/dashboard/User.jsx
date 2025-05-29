@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import Loadingg from "../animate/loading";
 import Footer from "../footer/footer";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const PerformerCard = ({ performer, index }) => {
   const { ref, inView } = useInView({ triggerOnce: true });
@@ -46,7 +46,7 @@ const User = () => {
   useEffect(() => {
     const fetchPerformers = async () => {
       try {
-        const res = await axios.get("https://performly-backend.onrender.com/api/performers/");
+        const res = await axios.get(`${BACKEND_URL}/api/performers/`);
         setPerformers(res.data);
         const uniqueCategories = Array.from(new Set(res.data.map(p => p.category))).filter(Boolean);
         setCategories(uniqueCategories);
