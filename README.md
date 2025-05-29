@@ -48,16 +48,6 @@ Performly is a comprehensive platform that connects performers with clients, ena
   - Booking confirmation
   - Calendar integration
 
-- **Review & Rating System**
-  - Post-performance reviews
-  - Rating system
-  - Feedback management
-
-- **Notification System**
-  - Real-time notifications
-  - Email notifications
-  - Booking updates
-
 ## 🛠 Tech Stack
 
 ### ⚙️ Backend
@@ -140,11 +130,6 @@ npm start
 - `GET /api/bookings` - List bookings
 - `GET /api/bookings/:id` - Get booking details
 - `PUT /api/bookings/:id` - Update booking status
-
-### Review Endpoints
-- `POST /api/reviews` - Create review
-- `GET /api/reviews` - List reviews
-- `PUT /api/reviews/:id` - Update review
 
 ## 📁 Project Structure
 
