@@ -146,26 +146,15 @@ const Home = () => {
         <div className="three h-3/7  relative">
           <div className="aboutustext h-[90%] w-[95%] flex absolute left-15   ">
             <div className="  w-full "></div>
-            <div className="appearanimation2 w-full text-orange-200 bg-sky-900 overflow-scroll text-xl hover:scale-110 transition-all ease-in-out duration-500 border-29 border-sky-900 rounded-xl">
+            <div className="appearanimation2 w-full text-orange-200 bg-sky-900  text-xl hover:scale-110 transition-all ease-in-out duration-500 border-29 border-sky-900 rounded-xl">
               <h1 className="text-5xl">Performers</h1>
-              {/* Build Your Brand: Create a captivating profile with images,
-              videos, and a compelling bio that highlights your talent and
-              experience. Manage Your Gigs: Easily track your bookings, update
-              availability, and get real-time notifications. Get Paid Securely:
-              Receive hassle-free, timely payments with seamless integrations.
-              Grow Your Reputation: Collect ratings and reviews to enhance your
-              visibility in the gig community. */}
+              
               We empower performers with a platform to showcase their talent, manage gigs effortlessly, and secure fast, hassle-free payments. Build a captivating brand, grow your reputation with verified reviews, and stay connected with a supportive community. Let us help you elevate your career and unlock new opportunities.
             </div>
             <div className="w-1/7"></div>
-            <div className="appearanimation text-orange-200 h-full w-full overflow-scroll text-xl bg-sky-900 hover:scale-110 transition-all ease-in-out duration-500  border-29 border-sky-900  rounded-xl ">
+            <div className="appearanimation text-orange-200 h-full w-full text-xl bg-sky-900 hover:scale-110 transition-all ease-in-out duration-500  border-29 border-sky-900  rounded-xl ">
               <h1 className="text-5xl text-orange-200">Clients & Event Organizers:</h1>
-              {/* <p>Discover Local Talent: Browse a wide range of
-              performers—musicians, magicians, comedians, dancers, and more.
-              Filter & Find: Search by category, price, availability, and
-              location to find your perfect match. Hassle-free Bookings: Send
-              gig requests, confirm availability, and make secure payments—all
-              in one place.</p> */}
+              
               Clients and event organizers can discover exceptional local talent, from musicians and magicians to comedians and dancers. Effortlessly browse and filter by category, price, availability, and location. Enjoy hassle-free bookings with instant gig requests, availability confirmation, and secure payments—all in one convenient platform.
               
             </div>

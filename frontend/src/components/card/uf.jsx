@@ -59,7 +59,7 @@ const uf = () => {
           </div>
         </div>
         <div className="w-1/2  basis-[50%] relative sticky top-0 h-dvh">
-          <div className="cards shadow-2xl h-140 w-140 absolute top-1/5 left-1/5  border-1 rounded-xl flex justify-center border-l-43 border-r-43 border-blue-200 text-xl font-medium bg-blue-200 items-center">
+          <div className="cards shadow-2xl h-140 w-140 absolute top-1/5 shadow-black left-1/5  border-1 rounded-xl flex justify-center border-l-43 border-r-43 border-blue-200 text-xl font-medium bg-blue-200 items-center">
             {" "}
             Create a captivating profile with images, videos, and a compelling
             bio that highlights your talent and experience. Manage Your Gigs:
@@ -68,7 +68,7 @@ const uf = () => {
             payments with seamless integrations. Grow Your Reputation: Collect
             ratings and reviews to enhance your visibility in the gig community.{" "}
           </div>
-          <div className="cards h-140 w-140 absolute bg-blue-300 top-1/5 left-1/5 border-1 rounded-xl shadow-2xl flex justify-center  border-l-43 border-r-43 border-blue-300 text-xl font-medium items-center">
+          <div className="cards h-140 w-140 absolute shadow-black bg-blue-300 top-1/5 left-1/5 border-1 rounded-xl shadow-2xl flex justify-center  border-l-43 border-r-43 border-blue-300 text-xl font-medium items-center">
             <p>
               {" "}
               Browse a wide range of performers—musicians, magicians, comedians,
@@ -79,9 +79,9 @@ const uf = () => {
             </p>
           </div>
           
-          <div className="cards h-140 w-140 bg-sky-800 absolute top-1/5 left-1/5 shadow-2xl rounded-xl flex justify-center items-center ">
+          <div className="cards h-140 w-140 bg-sky-800 shadow-black absolute top-1/5 left-1/5 shadow-2xl rounded-xl flex justify-center items-center ">
             {" "}
-            <button    onClick={handlenavigate} className=" w-73 h-33 rounded-xl bg-gradient-to-t from-sky-500 to-sky-900 text-black text-2xl font-bold hover:bg-sky-900 transition-all border-0 ease-in-out duration-200 hover:text-white ">
+            <button    onClick={handlenavigate} className=" w-73 h-33 rounded-xl shadow-black shadow-2xl hover:scale-107  bg-gradient-to-t from-sky-500 to-sky-900 text-black text-2xl font-bold transition-all border-0 ease-in-out duration-200 hover:text-white ">
               LOGIN
             </button>
           </div>
