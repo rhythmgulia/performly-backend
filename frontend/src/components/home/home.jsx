@@ -3,6 +3,7 @@ import LoaderText from "../animate/loader";
 import Picture from "../animate/lottie";
 import { useNavigate } from "react-router-dom";
 import Cardsele from "../card/uf"
+import Footer from "../footer/footer"
 
 const Home = () => {
   const navigateto = useNavigate();
@@ -43,20 +44,26 @@ const Home = () => {
   ];
 
   return (
-    <div className="main h-screen">
-      <div>
-        <div className="w-full flex z-[2] fixed justify-end absolute top-4 right-20">
-            <button
-              className=" h-12 w-28 font-bold rounded-lg bg-sky-900 text-2xl text-white hover:scale-110 hover:width-0 hover:bg-black transition-all 300 ease-in-out hover:text-white"
-              onClick={handlenavigate}
-            >
-              LOGIN
-            </button>
-          </div>
-        <header className="head fixed top-0 z-[1] opacity-40 h-20 w-screen ">
-          
-        </header>
-      </div>
+    <div className="main h-full">
+     <div>
+  <header className="head fixed top-0 z-[1] h-20 w-screen flex items-center justify-between ">
+
+    <div className="logo flex items-center">
+      <img src="./logoo.png" alt="Logo" className="h-26 mt-10 " />
+    </div>
+
+    {/* Login button on the right */}
+    <div className="flex pr-5 items-center">
+      <button
+        className="h-12 w-28  rounded-lg bg-sky-900 text-lg text-white hover:scale-110 transition-all duration-300 ease-in-out hover:bg-black hover:text-white"
+        onClick={handlenavigate}
+      >
+        LOGIN
+      </button>
+    </div>
+  </header>
+</div>
+
       <div className="home-container overflow-hidden h-full w-screen relative bg-black">
         <div className="service-text flex flex-col lg:flex-row h-screen w-full bg-orange-100">
           <div className="w-full lg:w-2/5 h-full text-4xl  sm:text-6xl lg:text-8xl p-3">
@@ -120,7 +127,7 @@ const Home = () => {
           <div className="secondslide-text space-x-50 font-bold text-3xl whitespace-nowrap items-center">
             {[...secondSlideText, ...secondSlideText, ...secondSlideText].map(
               (text, index) => (
-                <span key={index}> {text}||</span>
+                <span key={index}> || {text}||</span>
               )
             )}
           </div>
@@ -170,63 +177,10 @@ const Home = () => {
        
 </div>
 
-      <footer className="h-[70%] w-full bg-sky-900 relative text-white py-10">
-        <div className="absolute top-1/3 left-50 text-3xl font-bold">
-          PERFORMLY
-        </div>
-
-        <div className="absolute top-1/3 right-1/6 ">
-          <div className="w-full flex justify-center mt-20">
-            <div className="w-[80%]  grid grid-cols-1 md:grid-cols-3 gap-50">
-              <div>
-                <h2 className="text-xl font-semibold mb-4">COMPANY</h2>
-                <ul className="space-y-2">
-                  <li className="hover:underline cursor-pointer">About Us</li>
-                  <li className="hover:underline cursor-pointer">
-                    Terms & Conditions
-                  </li>
-                  <li className="hover:underline cursor-pointer">
-                    Privacy Policy
-                  </li>
-                  <li className="hover:underline cursor-pointer">Careers</li>
-                </ul>
-              </div>
-
-              <div>
-                <h2 className="text-xl font-semibold mb-4">QUICK LINKS</h2>
-                <ul className="space-y-2">
-                  <li className="hover:underline cursor-pointer">Home</li>
-                  <li className="hover:underline cursor-pointer">Features</li>
-                  <li className="hover:underline cursor-pointer">Pricing</li>
-                  <li className="hover:underline cursor-pointer">Support</li>
-                </ul>
-              </div>
-
-              <div>
-                <h2 className="text-xl font-semibold mb-4">FOLLOW US</h2>
-                <div className="grid grid-cols gap-x-3">
-                  <a href="#" className="hover:text-gray-400">
-                    Twitter
-                  </a> 
-                  <a href="#" className="hover:text-gray-400">
-                    Instagram
-                  </a>
-                  <a href="#" className="hover:text-gray-400">
-                    LinkedIn
-                  </a>
-                  <a href="#" className="hover:text-gray-400">
-                    Facebook
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-16 text-center absolute left-6/14 top-3/4 text-sm text-gray-400">
-          © {new Date().getFullYear()} Performly. All rights reserved.
-        </div>
-      </footer>
+<div className="w-full ">
+  <Footer/>
+</div>
+      
     </div>
   );
 };

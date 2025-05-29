@@ -14,6 +14,7 @@ const PerformerProfile = () => {
           },
         });
         setDetails(res.data);
+        console.log(res.data)
       } catch (err) {
         console.error('Error fetching performer details:', err);
       }
@@ -35,11 +36,11 @@ const PerformerProfile = () => {
           <p><strong>Specialties:</strong> {details.specialties.join(', ')}</p>
           <p><strong>Experience:</strong> {details.experience} years</p>
           <p><strong>Pricing:</strong> ₹{details.pricing}</p>
-          <p><strong>Availability:</strong> 
+          {/* <p><strong>Availability:</strong> 
             {Object.entries(details.availability).map(([day, time]) => (
               <span key={day}> {day}: {time}; </span>
             ))}
-          </p>
+          </p> */}
           <p><strong>Rating:</strong> {details.rating} ⭐</p>
           <p><strong>Bio:</strong> {details.bio}</p>
         </div>

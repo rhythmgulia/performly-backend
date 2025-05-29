@@ -91,9 +91,14 @@ const PaymentPage = () => {
     }
   };
 
-  return (
-    <div className="h-screen p-6 bg-white text-center">
-      <div className="h-[20%] flex items-center border-30 border-sky-900 bg-sky-900 text-white">
+
+  
+
+   return (
+    <div className="h-screen bg-white text-center">
+      <div className="h-[20%] flex items-center  border-sky-900 p-10 bg-sky-900 text-white">
+
+ 
         <h1 className="text-7xl font-bold mb-4">Your Payment</h1>
       </div>
       <div className="h-[80%] w-full grid grid-cols-2 bg-gray-100">
@@ -103,10 +108,12 @@ const PaymentPage = () => {
           </div>
         </div>
 
+
         <div className="flex items-center justify-center">
+
           {error && <p className="text-red-500">{error}</p>}
           {booking ? (
-            <div className="bg-white w-[80%] h-130 border-64 grid gap-2 border-white rounded-2xl shadow-xl p-8 mt-8">
+            <div className="bg-white w-[80%] h-[90%]  grid gap-2 border-white rounded-2xl shadow-xl p-13 mt-8">
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-gray-800 mb-6 pb-4 border-b-2 border-gray-200">
                   Booking Summary

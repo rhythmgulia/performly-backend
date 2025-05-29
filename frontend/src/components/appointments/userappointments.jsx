@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LottiePic from "../animate/lottie4"
+import Loadingg from "../animate/loading"
 
 const Userappointments = () => {
   const [bookings, setBookings] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); 
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -19,8 +21,12 @@ const Userappointments = () => {
         setBookings(res.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Error fetching bookings');
+      }finally {
+        setLoading(false);  
       }
     };
+
+
 
     fetchBookings();
   }, [id]);
@@ -29,6 +35,15 @@ const Userappointments = () => {
     navigate(`/payment/${bookingId}`);
   };
 
+
+   if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        
+       <Loadingg/>
+      </div>
+    );
+  }
   return (
     <div className="h-full w-full">
       <div className='h-30 w-full flex items-center   bg-gradient-to-b from-sky-900 to-white border-sky-900  text-black'>

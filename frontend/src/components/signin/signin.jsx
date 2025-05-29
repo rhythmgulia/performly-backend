@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import SignInPicture from "../animate/lottie2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loadingg from "../animate/loading";
 
 const Signin = () => {
   const [form, setForm] = useState({ phone: "", password: "" });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,68 +48,83 @@ const Signin = () => {
         // }
         // else{
         //   navigate(`/performerdashboard/${res.data.user.performerId}`);
-        // }   
-        navigate(`/performerdashboard/${res.data.user.id}`)   
-      } 
-      else {
+        // }
+        navigate(`/performerdashboard/${res.data.user.id}`);
+      } else {
         navigate(`/userdashboard/${res.data.user.id}`);
       }
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
       <div className="signinbg h-screen bg-gradient-to-t from-sky-950  to-orange-100 w-screen flex justify-center items-center">
+        <div className="grid grid-cols-2 h-full w-full">
+          <div className="lottie-logo h-full w-full  flex items-center justify-center">
+            <div>
+              <div className="text h-[20%] font-bold text-8xl flex justify-center items-center">
+                <h1>WELCOME</h1>
+              </div>
+              <div className="logo h-[80%] w-full">
+                <SignInPicture />
+              </div>
+            </div>
+          </div>
 
-        <div className="signin-body h-[70%] absolute left-[25%] w-[30%] bg-transparent   hover:scale-103 shadow-xl shadow-black transition-all ease-in relative rounded-4xl ">
-          <div className="text absolute top-[30%]  font-medium left-[37%] text-5xl">
+          <div className="h-full w-full flex items-center justify-center">
+            <div className="signin-body h-[80%] w-[65%]   shadow-xl shadow-black rounded-4xl  ">
+              <div className="  font-medium flex justify-center pt-[40%] text-5xl">
             <h1>LOGIN</h1>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="email absolute top-[40%] left-[20%] ">
+            <div className="email pt-5  justify-center flex ">
               <input
                 type="tel"
                 name="phone"
-                className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
+                className="border-2 h-12 w-80  p-4 rounded-2xl hover:scale-104 transition-all ease-in"
                 placeholder="Enter Your Phone Number"
                 value={form.phone}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className="email absolute top-[50%] left-[20%] ">
+
+            <div className="email pt-5  justify-center flex  ">
               <input
                 type="password"
                 name="password"
-                className="border-2 h-12 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
+                className="border-2 h-12 p-4 w-80 rounded-2xl hover:scale-104 transition-all ease-in"
                 placeholder="Enter Your Password"
                 value={form.password}
                 onChange={handleChange}
                 required
               />
             </div>
-            <button
+            <div className="pt-5  justify-center flex ">
+              <button
               type="submit"
-              className=" h-10 rounded-xl text-orange-100 bg-sky-900 w-33 absolute top-[62%] hover:bg-sky-950 hover:text-white transition-all left-[37%]"
+              className=" h-10 rounded-xl text-orange-100 bg-sky-900 w-33  hover:bg-sky-950 hover:text-white transition-all "
             >
               LOGIN
             </button>
-          </form>
-
-          <a href="/signup" className="absolute hover:text-white top-[74%] left-[29%]">
+            </div>
+            <div className="pt-8  justify-center flex ">
+              <a href="/signup" className=" hover:text-white ">
             New User? Create Account
           </a>
-        </div>
+            </div>
 
-        <div className="lottie-logo h-120 w-100 absolute top-[30%] left-[10%]">
-          <div className="text h-[20%] font-bold text-8xl flex justify-center items-center">
-            <h1>WELCOME</h1>
-          </div>
-          <div className="logo h-[80%] w-full">
-            <SignInPicture />
+
+            
+          </form>
+
+          
+            </div>
           </div>
         </div>
       </div>
