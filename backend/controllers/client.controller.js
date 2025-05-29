@@ -1,6 +1,5 @@
 const Client = require("../db/models/client");
 
-// Removed createClient function as it's handled in user signup
 
 exports.getAllClients = async (req, res) => {
   try {
