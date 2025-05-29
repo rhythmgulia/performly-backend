@@ -9,7 +9,7 @@ const BookingsByPerformer = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [performer, setPerformer] = useState(null);
-  const [filterStatus, setFilterStatus] = useState("All"); // Added for filtering
+  const [filterStatus, setFilterStatus] = useState("All"); 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
