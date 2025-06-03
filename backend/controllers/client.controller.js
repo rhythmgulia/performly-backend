@@ -5,7 +5,6 @@ exports.getAllClients = async (req, res) => {
   try {
     const clients = await Client.find()
       .populate("userId", "-password")
-      .populate("favorites", "-password")
       .populate("bookings");
     res.status(200).json(clients);
   } catch (err) {
@@ -18,7 +17,6 @@ exports.getClientById = async (req, res) => {
   try {
     const client = await Client.findById(req.params.id)
       .populate("userId", "-password")
-      .populate("favorites", "-password")
       .populate("bookings");
     if (!client) {
       return res.status(404).json({ error: "Client not found" });

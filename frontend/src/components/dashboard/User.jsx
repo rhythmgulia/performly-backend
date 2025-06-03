@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -40,13 +39,14 @@ const User = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     const fetchPerformers = async () => {
       try {
-        const res = await axios.get("https://performly-backend.onrender.com/api/performers/");
+        const res = await axios.get(`https://performly-backend.onrender.com/api/performers/`);
         setPerformers(res.data);
         const uniqueCategories = Array.from(new Set(res.data.map(p => p.category))).filter(Boolean);
         setCategories(uniqueCategories);
@@ -58,6 +58,23 @@ const User = () => {
       }
     };
     fetchPerformers();
+  }, []);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get(`https://performly-backend.onrender.com/api/users/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(res.data);
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to fetch profile');
+      }
+    };
+
+    fetchProfile();
   }, []);
 
   useEffect(() => {
@@ -86,11 +103,11 @@ const User = () => {
       <div className="h-full w-screen bg-gradient-to-b mb-12 from-orange-100 to-white justify-center">
         <div className="container m-auto w-screen">
           <div className="heading h-full">
-            <div className="h-[6%] ml-10 font-bold text-5xl">
-              <h1 className="pt-20">WELCOME, </h1>
+            <div className="h-[6%] ml-10 font-bold text-8xl">
+              <h1 className="pt-20">WELCOME,{user.name} </h1>
             </div>
             <div className="h-[10%] mt-8">
-              <h2 className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-orange-100 border-orange-100">
+              <h2 className="text-7xl font-bold text-transparent ml-5 bg-clip-text bg-gradient-to-r from-sky-900 to-orange-100 border-orange-100">
                 Discover Talented Performers
               </h2>
               <div className="flex h-17 items-center text-xl text-sky-900 ml-10 border-orange-100 font-medium w-[50%]">
@@ -102,28 +119,36 @@ const User = () => {
 
            
             <div className="my-8 ml-10">
-              <label htmlFor="categoryFilter" className="font-semibold mr-4 text-xl text-sky-900">
+              
+              <div className="flex space-x-183">
+<label htmlFor="categoryFilter" className="font-semibold mr-4 text-xl text-sky-900">
                 Filter by Category:
               </label>
               <select
                 id="categoryFilter"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="border border-sky-900 rounded-md px-4 py-2"
+                className="border border-sky-900 h-10 w-40 rounded-md px-4 py-2"
               >
                 <option value="All">All</option>
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
-            </div>
-
-            <button
+              <div>
+                 <button
               onClick={handleYourAppointment}
-              className="text-white font-semibold absolute w-60 h-20 right-23 bottom-163 z-[100] rounded-lg bg-sky-900 hover:shadow-2xl transition-all duration-400 ease-in-out"
+              className="text-white font-semibold  w-60 h-20  z-[100] rounded-lg bg-sky-900 hover:shadow-xl hover:scale-105 hover:bg-sky-950 hover:shadow-black  transition-all duration-400 ease-in-out"
             >
               Your Appointments
             </button>
+
+              </div>
+
+              </div>
+            </div>
+
+           
 
             <div className="w-full h-[84%] mt-20 justify-center">
               <div className="w-full h-full md:w-full border-orange-100 flex flex-col items-center justify-center relative">

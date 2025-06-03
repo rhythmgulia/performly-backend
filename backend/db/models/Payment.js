@@ -15,7 +15,7 @@ const paymentSchema=new mongoose.Schema({
         type:String
     },
     Amount:{
-        type:number
+        type:Number
     }
 })
 

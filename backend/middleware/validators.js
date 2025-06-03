@@ -28,20 +28,6 @@ const performerValidationRules = () => {
     ];
 };
 
-const reviewValidationRules = () => {
-    return [
-        body('performerId').notEmpty().isMongoId(),
-        body('rating').isInt({ min: 1, max: 5 }),
-        body('comment').isLength({ min: 10, max: 500 })
-    ];
-};
-
-const notificationValidationRules = () => {
-    return [
-        body('userId').notEmpty().isMongoId(),
-        body('message').notEmpty().isLength({ min: 5, max: 200 })
-    ];
-};
 
 const validate = (req, res, next) => {
     const errors = validationResult(req);
@@ -65,7 +51,5 @@ module.exports = {
     bookingValidationRules,
     userUpdateValidationRules, 
     performerValidationRules,
-    reviewValidationRules,
-    notificationValidationRules,
     validate
 };
